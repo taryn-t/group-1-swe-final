@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Products from "./components/Navigation/Products/Products";
 
 export default function Home() {
