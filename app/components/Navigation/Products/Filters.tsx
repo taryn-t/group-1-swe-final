@@ -1,6 +1,6 @@
 'use client'
 
-import { JSX, ReactNode, useState } from 'react'
+import {  ReactNode, useState } from 'react'
 import {
   Dialog,
   DialogBackdrop,
