@@ -56,49 +56,49 @@ export const navigation = {
           id: 'men',
           name: 'Men',
           items: [
-            { name: 'T-Shirts & Tanks', href: '#' },
-            { name: 'Sweatshirts', href: '#' },
-            { name: 'Hats', href: '#' },
-            { name: 'Outerwear', href: '#' },
-            { name: 'Accessories', href: '#' },
-            { name: 'Shorts & Pants', href: '#' },
-            { name: 'Jerseys', href: '#' },
-            { name: 'Browse All', href: '#' },
+            { name: 'T-Shirts & Tanks', href: '/shop/men/t-shirts-tanks' },
+            { name: 'Sweatshirts', href: '/shop/men/sweatshirts' },
+            { name: 'Hats', href: '/shop/men/hats' },
+            { name: 'Outerwear', href: '/shop/men/outerwear' },
+            { name: 'Accessories', href: '/shop/men/accessories' },
+            { name: 'Shorts & Pants', href: '/shop/men/shorts-pants' },
+            { name: 'Jerseys', href: 'shop/men/jerseys' },
+            { name: 'Browse All', href: '/shop/men' },
           ],
         },
         {
           id: 'women',
           name: 'Women',
           items: [
-            { name: 'T-Shirts & Tanks', href: '#' },
-            { name: 'Sweatshirts', href: '#' },
-            { name: 'Hats', href: '#' },
-            { name: 'Outerwear', href: '#' },
-            { name: 'Accessories', href: '#' },
-            { name: 'Shorts & Pants', href: '#' },
-            { name: 'Browse All', href: '#' },
+            { name: 'T-Shirts & Tanks', href: '/shop/women/t-shirts-tanks' },
+            { name: 'Sweatshirts', href: '/shop/women/sweatshirts' },
+            { name: 'Hats', href: '/shop/women/hats' },
+            { name: 'Outerwear', href: '/shop/women/outerwear' },
+            { name: 'Accessories', href: '/shop/women/accessories' },
+            { name: 'Shorts & Pants', href: '/shop/women/shorts-pants' },
+            { name: 'Browse All', href: '/shop/women' },
           ],
         },
         {
             id: 'accessories',
             name: 'Accessories',
             items: [
-              { name: 'Hats', href: '#' },
-              { name: 'Backpacks & Bags', href: '#' },
-              { name: 'Watched & Jewelry', href: '#' },
-              { name: 'Footwear', href: '#' },
-              { name: 'Rain Gear', href: '#' },
-              { name: 'Cold Weather', href: '#' },
-              { name: 'Browse All', href: '#' },
+              { name: 'Hats', href: '/shop/accessories/hats' },
+              { name: 'Backpacks & Bags', href: '/shop/accessories/backpacks-bags' },
+              { name: 'Watches & Jewelry', href: '/shop/accessories/watches-jewelry' },
+              { name: 'Footwear', href: '/shop/accessories/footwear' },
+              { name: 'Rain Gear', href: '/shop/accessories/rain-gear' },
+              { name: 'Cold Weather', href: '/shop/accessories/cold-weather' },
+              { name: 'Browse All', href: '/shop/accessories' },
             ],
           },
         {
           id: 'kids',
           name: 'Kids',
           items: [
-            { name: 'Infant & Toddler', href: '#' },
-            { name: 'Youth', href: '#' },
-            { name: 'Browse All', href: '#' },
+            { name: 'Infant & Toddler', href: '/shop/kids/infant-toddler' },
+            { name: 'Youth', href: '/shop/kids/youth' },
+            { name: 'Browse All', href: '/shop/kids' },
           ],
         },
       ],
@@ -127,26 +127,26 @@ export const navigation = {
           id: 'collectables',
           name: 'Gifts & Collectables',
           items: [
-            { name: 'Tailgate & Spirit', href: '#' },
-            { name: 'Drinkwear', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'Auto Accessories', href: '#' },
-            { name: 'Blankets', href: '#' },
-            { name: 'School Accessories', href: '#' },
-            { name: 'Office & Travel', href: '#' },
-            { name: 'Pet Supplies', href: '#' },
-            { name: 'Plush', href: '#' },
-            { name: 'Ornaments & Holiday', href: '#' },
-            { name: 'Golf', href: '#' },
-            { name: 'Home D', href: '#' },
-            { name: 'Browse All', href: '#' },
+            { name: 'Tailgate & Spirit', href: '/shop/gifts-collectables/tailgate-spirit' },
+            { name: 'Drinkwear', href: '/shop/gifts-collectables/drinkwear' },
+            { name: 'Sweaters', href: '/shop/gifts-collectables/sweaters' },
+            { name: 'Auto Accessories', href: '/shop/gifts-collectables/auto-accessories' },
+            { name: 'Blankets', href: '/shop/gifts-collectables/blankets' },
+            { name: 'School Accessories', href: '/shop/gifts-collectables/school-accessories' },
+            { name: 'Office & Travel', href: '/shop/gifts-collectables/office-travel' },
+            { name: 'Pet Supplies', href: '/shop/gifts-collectables/pet-supplies' },
+            { name: 'Plush', href: '/shop/gifts-collectables/plush' },
+            { name: 'Ornaments & Holiday', href: '/shop/gifts-collectables/ornaments-holiday' },
+            { name: 'Golf', href: '/shop/gifts-collectables/golf' },
+            { name: 'Home Decor', href: '/shop/gifts-collectables/home-decor' },
+            { name: 'Browse All', href: '/shop/gifts-collectables' },
           ],
         },
       ],
     },
   ],
   pages: [
-    { name: 'Textbooks', href: '#' },
+    { name: 'Textbooks', href: '/shop/textbooks' },
   ],
 }
 
@@ -211,9 +211,9 @@ export default function NavigationBar() {
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {navigation.pages.map((page) => (
                 <div key={page.name} className="flow-root">
-                  <a href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
+                  <Link href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
                     {page.name}
-                  </a>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -265,9 +265,9 @@ export default function NavigationBar() {
                         >
                           {section.items.map((item) => (
                             <li key={item.name} className="flow-root">
-                              <a href={item.href} className="-m-2 block p-2 text-gray-500">
+                              <Link href={item.href} className="-m-2 block p-2 text-gray-500">
                                 {item.name}
-                              </a>
+                              </Link>
                             </li>
                           ))}
                         </ul>
@@ -287,14 +287,14 @@ export default function NavigationBar() {
                 </a>
               </div>
               <div className="flow-root">
-                <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                <Link href="#" className="-m-2 block p-2 font-medium text-gray-900">
                   Create account
-                </a>
+                </Link>
               </div>
             </div>
 
             <div className="border-t border-gray-200 px-4 py-6">
-              <a href="#" className="-m-2 flex items-center p-2">
+              <Link href="#" className="-m-2 flex items-center p-2">
                 <img
                   alt=""
                   src="https://tailwindui.com/plus-assets/img/flags/flag-canada.svg"
@@ -302,7 +302,7 @@ export default function NavigationBar() {
                 />
                 <span className="ml-3 block text-base font-medium text-gray-900">CAD</span>
                 <span className="sr-only">, change currency</span>
-              </a>
+              </Link>
             </div>
           </DialogPanel>
         </div>
@@ -349,7 +349,7 @@ export default function NavigationBar() {
               <PopoverGroup className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="flex h-full space-x-8">
                   {navigation.categories.map((category) => (
-                    <Popover key={category.name} className="flex">
+                    <Popover key={category.name} className="flex focus-visible:border-none focus-visible:ring-0 ring-0 border-none  focus-visible:outline-none">
                       <motion.div 
                       variants={childVariants} /** Added variants **/
                       transition={{
@@ -357,7 +357,7 @@ export default function NavigationBar() {
                         duration: 0.4,
                       }}
                       className="relative flex">
-                        <PopoverButton className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-open:border-marshall data-open:text-marshall">
+                        <PopoverButton className="focus-visible:border-none focus-visible:ring-0 ring-0 border-none  focus-visible:outline-none  relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-open:border-marshall data-open:text-marshall">
                           {category.name}
                         </PopoverButton>
                       </motion.div>
@@ -403,9 +403,9 @@ export default function NavigationBar() {
                                     >
                                       {section.items.map((item) => (
                                         <li key={item.name} className="flex">
-                                          <a href={item.href} className="hover:text-gray-800">
+                                          <Link href={item.href} className="hover:text-gray-800">
                                             {item.name}
-                                          </a>
+                                          </Link>
                                         </li>
                                       ))}
                                     </ul>
@@ -442,9 +442,9 @@ export default function NavigationBar() {
                     Sign in
                   </a>
                   <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  <Link href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     Create account
-                  </a>
+                  </Link>
                 </div>
 
                 {/* Search */}
@@ -454,14 +454,14 @@ export default function NavigationBar() {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 flex items-center p-2">
+                  <Link href="#" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       aria-hidden="true"
                       className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
                     <span className="sr-only">items in cart, view bag</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
