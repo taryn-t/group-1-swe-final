@@ -35,8 +35,8 @@ export const navigation = {
 
   categories: [
     {
-      id: 'clothing',
-      name: 'Clothing',
+      id: 'school-supplies',
+      name: 'School Supplies',
     //   featured: [
     //     {
     //       name: 'New Arrivals',
@@ -53,100 +53,81 @@ export const navigation = {
     //   ],
       sections: [
         {
-          id: 'men',
-          name: 'Men',
+          id: 'supplies',
+          name: 'School Supplies',
           items: [
-            { name: 'T-Shirts & Tanks', href: '/shop/men/t-shirts-tanks' },
-            { name: 'Sweatshirts', href: '/shop/men/sweatshirts' },
-            { name: 'Hats', href: '/shop/men/hats' },
-            { name: 'Outerwear', href: '/shop/men/outerwear' },
-            { name: 'Accessories', href: '/shop/men/accessories' },
-            { name: 'Shorts & Pants', href: '/shop/men/shorts-pants' },
-            { name: 'Jerseys', href: 'shop/men/jerseys' },
-            { name: 'Browse All', href: '/shop/men' },
+            { name: 'Notebooks & Paper', href: '/shop/school-supplies/notebooks-paper' },
+            { name: 'Folders & Binders', href: '/shop/school-supplies/folder-binders' },
+            { name: 'Writing Instruments', href: '/shop/school-supplies/writing-instruments' },
+            { name: 'Calculators & Batteries', href: '/shop/school-supplies/calculators-batteries' },
+            { name: 'Testing Supplies', href: '/shop/school-supplies/testing-supplies' },
+            { name: 'Browse All', href: '/shop/school-supplies' },
           ],
         },
         {
-          id: 'women',
-          name: 'Women',
+          id: 'engineering-supplies',
+          name: 'Engineering & Drafting Supplies',
           items: [
-            { name: 'T-Shirts & Tanks', href: '/shop/women/t-shirts-tanks' },
-            { name: 'Sweatshirts', href: '/shop/women/sweatshirts' },
-            { name: 'Hats', href: '/shop/women/hats' },
-            { name: 'Outerwear', href: '/shop/women/outerwear' },
-            { name: 'Accessories', href: '/shop/women/accessories' },
-            { name: 'Shorts & Pants', href: '/shop/women/shorts-pants' },
-            { name: 'Browse All', href: '/shop/women' },
+            { name: 'Noteooks, Papers, & Boards', href: '/shop/engineering-supplies/notebooks-papers-boards' },
+            { name: 'Templates, Measuring & Model Building', href: '/shop/engineering-supplies/templates-measuring-model-building' },
+            { name: 'Browse All', href: '/shop/engineering-supplies' },
           ],
         },
         {
-            id: 'accessories',
-            name: 'Accessories',
+            id: 'specialty-supplies',
+            name: 'Specialty Supplies',
             items: [
-              { name: 'Hats', href: '/shop/accessories/hats' },
-              { name: 'Backpacks & Bags', href: '/shop/accessories/backpacks-bags' },
-              { name: 'Watches & Jewelry', href: '/shop/accessories/watches-jewelry' },
-              { name: 'Footwear', href: '/shop/accessories/footwear' },
-              { name: 'Rain Gear', href: '/shop/accessories/rain-gear' },
-              { name: 'Cold Weather', href: '/shop/accessories/cold-weather' },
-              { name: 'Browse All', href: '/shop/accessories' },
+              { name: 'Medical', href: '/shop/specialty-supplies/medical' },
+              { name: 'Browse All', href: '/shop/specialty-supplies' },
             ],
           },
         {
-          id: 'kids',
-          name: 'Kids',
+          id: 'art-materials',
+          name: 'Art Materials',
           items: [
-            { name: 'Infant & Toddler', href: '/shop/kids/infant-toddler' },
-            { name: 'Youth', href: '/shop/kids/youth' },
-            { name: 'Browse All', href: '/shop/kids' },
+            { name: 'Drawing Supplies', href: '/shop/art-materials/drawing-supplies' },
+            { name: 'Art, Paper Boards & Film Products', href: '/shop/art-materials/art-paper-boards-film-products' },
+            { name: 'Pastels & Painting Supplies', href: '/shop/art-materials/pastels-painting-supplies' },
+            { name: 'Other Art School Supplies', href: '/shop/art-materials/art-school-supplies' },  
+            { name: 'Browse All', href: '/shop/art-materials' },
           ],
         },
       ],
     },
     {
-      id: 'gifts',
-      name: 'Gifts & Collectables',
+      id: 'textbooks',
+      name: 'Textbooks',
     //   featured: [
     //     {
-    //       name: 'Tailgate & Spirit',
+    //       name: 'New Arrivals',
     //       href: '#',
-    //       imageSrc:
-    //         'https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
-    //       imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
+    //       imageSrc: 'https://tailwindui.com/plus-assets/img/ecommerce-images/mega-menu-category-01.jpg',
+    //       imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
     //     },
     //     {
-    //       name: 'Artwork Tees',
+    //       name: 'Basic Tees',
     //       href: '#',
-    //       imageSrc: 'https://tailwindui.com/plus-assets/img/ecommerce-images/category-page-02-image-card-06.jpg',
-    //       imageAlt:
-    //         'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
+    //       imageSrc: 'https://tailwindui.com/plus-assets/img/ecommerce-images/mega-menu-category-02.jpg',
+    //       imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
     //     },
     //   ],
       sections: [
         {
-          id: 'collectables',
-          name: 'Gifts & Collectables',
+          id: 'textbook-section',
+          name: 'Textbooks',
           items: [
-            { name: 'Tailgate & Spirit', href: '/shop/gifts-collectables/tailgate-spirit' },
-            { name: 'Drinkwear', href: '/shop/gifts-collectables/drinkwear' },
-            { name: 'Sweaters', href: '/shop/gifts-collectables/sweaters' },
-            { name: 'Auto Accessories', href: '/shop/gifts-collectables/auto-accessories' },
-            { name: 'Blankets', href: '/shop/gifts-collectables/blankets' },
-            { name: 'School Accessories', href: '/shop/gifts-collectables/school-accessories' },
-            { name: 'Office & Travel', href: '/shop/gifts-collectables/office-travel' },
-            { name: 'Pet Supplies', href: '/shop/gifts-collectables/pet-supplies' },
-            { name: 'Plush', href: '/shop/gifts-collectables/plush' },
-            { name: 'Ornaments & Holiday', href: '/shop/gifts-collectables/ornaments-holiday' },
-            { name: 'Golf', href: '/shop/gifts-collectables/golf' },
-            { name: 'Home Decor', href: '/shop/gifts-collectables/home-decor' },
-            { name: 'Browse All', href: '/shop/gifts-collectables' },
+            { name: 'Find Your Textbook', href: '/shop/textbooks' },
+            { name: 'Sell Your Textbooks', href: '/shop/textbooks/sell-your-textbooks' },
+            { name: 'Textbook FAQs', href: '/shop/textbooks/faqs' },
+            { name: 'In-store price Match Guarantee', href: '/shop/textbooks/price-match' },
+            { name: 'Register for Text Rental', href: '/shop/textbooks/register-rental' },
           ],
         },
       ],
     },
   ],
   pages: [
-    { name: 'Textbooks', href: '/shop/textbooks' },
+    // { name: 'Textbooks', href: '/shop/textbooks' },
   ],
 }
 
@@ -208,7 +189,7 @@ export default function NavigationBar() {
               </button>
             </div>
 
-            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+            {/* <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {navigation.pages.map((page) => (
                 <div key={page.name} className="flow-root">
                   <Link href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
@@ -216,7 +197,7 @@ export default function NavigationBar() {
                   </Link>
                 </div>
               ))}
-            </div>
+            </div> */}
 
             {/* Links */}
             <TabGroup className="mt-2">
@@ -225,7 +206,7 @@ export default function NavigationBar() {
                   {navigation.categories.map((category) => (
                     <Tab
                       key={category.name}
-                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-base font-medium whitespace-nowrap text-gray-900 data-selected:border-marshall data-selected:text-marshall"
+                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-base font-medium whitespace-nowrap text-gray-900 data-selected:border-marshall-600 data-selected:text-marshall-600"
                     >
                       {category.name}
                     </Tab>
@@ -309,7 +290,7 @@ export default function NavigationBar() {
       </Dialog>
 
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-marshall px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
+        <p className="flex h-10 items-center justify-center bg-marshall-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
           Get free in-store pickup
         </p>
 
@@ -357,7 +338,7 @@ export default function NavigationBar() {
                         duration: 0.4,
                       }}
                       className="relative flex">
-                        <PopoverButton className="focus-visible:border-none focus-visible:ring-0 ring-0 border-none  focus-visible:outline-none  relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-open:border-marshall data-open:text-marshall">
+                        <PopoverButton className="focus-visible:border-none focus-visible:ring-0 ring-0 border-none  focus-visible:outline-none  relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-open:border-marshall-600 data-open:text-marshall-600">
                           {category.name}
                         </PopoverButton>
                       </motion.div>
@@ -419,20 +400,7 @@ export default function NavigationBar() {
                     </Popover>
                   ))}
 
-                  {navigation.pages.map((page) => (
-                    <motion.a
-                    variants={childVariants} /** Added variants **/
-                    transition={{
-                      ease: [0.1, 0.25, 0.3, 1],
-                      duration: 0.4,
-                    }}
-                      key={page.name}
-                      href={page.href}
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                    >
-                      {page.name}
-                    </motion.a>
-                  ))}
+              
                 </div>
               </PopoverGroup>
 

@@ -29,10 +29,9 @@ const subCategories = [
 
 
   { name: 'Textbooks', href: '#' },
-  { name: "Men's Clothing", href: '#' },
-  { name: "Women's Clothing", href: '#' },
-  { name: "Kid's Clothing", href: '#' },
-  { name: 'Gifts & Collectables', href: '#' },
+  { name: "School Supplies", href: '#' },
+  { name: "Engineering Supplies", href: '#' },
+  { name: "Art Materials", href: '#' },
 ]
 const filters = [
   {
@@ -120,7 +119,7 @@ export default function Filters({children}:Props) {
                                   id={`filter-mobile-${section.id}-${optionIdx}`}
                                   name={`${section.id}[]`}
                                   type="checkbox"
-                                  className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-marshall checked:bg-marshall indeterminate:border-marshall indeterminate:bg-marshall focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marshall disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                                  className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-marshall-600 checked:bg-marshall-600 indeterminate:border-marshall-600 indeterminate:bg-marshall-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marshall-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
                                 />
                                 <svg
                                   fill="none"
@@ -254,7 +253,7 @@ export default function Filters({children}:Props) {
                                   id={`filter-${section.id}-${optionIdx}`}
                                   name={`${section.id}[]`}
                                   type="checkbox"
-                                  className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-marshall checked:bg-marshall indeterminate:border-marshall indeterminate:bg-marshall focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marshall disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                                  className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-marshall-600 checked:bg-marshall-600 indeterminate:border-marshall-600 indeterminate:bg-marshall-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marshall-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
                                 />
                                 <svg
                                   fill="none"
