@@ -35,8 +35,8 @@ export const navigation = {
 
   categories: [
     {
-      id: 'clothing',
-      name: 'Clothing',
+      id: 'school-supplies',
+      name: 'School Supplies',
     //   featured: [
     //     {
     //       name: 'New Arrivals',
@@ -53,93 +53,43 @@ export const navigation = {
     //   ],
       sections: [
         {
-          id: 'men',
-          name: 'Men',
+          id: 'supplies',
+          name: 'School Supplies',
           items: [
-            { name: 'T-Shirts & Tanks', href: '/shop/men/t-shirts-tanks' },
-            { name: 'Sweatshirts', href: '/shop/men/sweatshirts' },
-            { name: 'Hats', href: '/shop/men/hats' },
-            { name: 'Outerwear', href: '/shop/men/outerwear' },
-            { name: 'Accessories', href: '/shop/men/accessories' },
-            { name: 'Shorts & Pants', href: '/shop/men/shorts-pants' },
-            { name: 'Jerseys', href: 'shop/men/jerseys' },
-            { name: 'Browse All', href: '/shop/men' },
+            { name: 'Notebooks & Paper', href: '/shop/school-supplies/notebooks-paper' },
+            { name: 'Folders & Binders', href: '/shop/school-supplies/folder-binders' },
+            { name: 'Writing Instruments', href: '/shop/school-supplies/writing-instruments' },
+            { name: 'Calculators & Batteries', href: '/shop/school-supplies/calculators-batteries' },
+            { name: 'Testing Supplies', href: '/shop/school-supplies/testing-supplies' },
+            { name: 'Browse All', href: '/shop/school-supplies' },
           ],
         },
         {
-          id: 'women',
-          name: 'Women',
+          id: 'engineering-supplies',
+          name: 'Engineering & Drafting Supplies',
           items: [
-            { name: 'T-Shirts & Tanks', href: '/shop/women/t-shirts-tanks' },
-            { name: 'Sweatshirts', href: '/shop/women/sweatshirts' },
-            { name: 'Hats', href: '/shop/women/hats' },
-            { name: 'Outerwear', href: '/shop/women/outerwear' },
-            { name: 'Accessories', href: '/shop/women/accessories' },
-            { name: 'Shorts & Pants', href: '/shop/women/shorts-pants' },
-            { name: 'Browse All', href: '/shop/women' },
+            { name: 'Noteooks, Papers, & Boards', href: '/shop/engineering-supplies/notebooks-papers-boards' },
+            { name: 'Templates, Measuring & Model Building', href: '/shop/engineering-supplies/templates-measuring-model-building' },
+            { name: 'Browse All', href: '/shop/engineering-supplies' },
           ],
         },
         {
-            id: 'accessories',
-            name: 'Accessories',
+            id: 'specialty-supplies',
+            name: 'Specialty Supplies',
             items: [
-              { name: 'Hats', href: '/shop/accessories/hats' },
-              { name: 'Backpacks & Bags', href: '/shop/accessories/backpacks-bags' },
-              { name: 'Watches & Jewelry', href: '/shop/accessories/watches-jewelry' },
-              { name: 'Footwear', href: '/shop/accessories/footwear' },
-              { name: 'Rain Gear', href: '/shop/accessories/rain-gear' },
-              { name: 'Cold Weather', href: '/shop/accessories/cold-weather' },
-              { name: 'Browse All', href: '/shop/accessories' },
+              { name: 'Medical', href: '/shop/specialty-supplies/medical' },
+              { name: 'Browse All', href: '/shop/specialty-supplies' },
             ],
           },
         {
-          id: 'kids',
-          name: 'Kids',
+          id: 'art-materials',
+          name: 'Art Materials',
           items: [
-            { name: 'Infant & Toddler', href: '/shop/kids/infant-toddler' },
-            { name: 'Youth', href: '/shop/kids/youth' },
-            { name: 'Browse All', href: '/shop/kids' },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'gifts',
-      name: 'Gifts & Collectables',
-    //   featured: [
-    //     {
-    //       name: 'Tailgate & Spirit',
-    //       href: '#',
-    //       imageSrc:
-    //         'https://tailwindui.com/plus-assets/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
-    //       imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
-    //     },
-    //     {
-    //       name: 'Artwork Tees',
-    //       href: '#',
-    //       imageSrc: 'https://tailwindui.com/plus-assets/img/ecommerce-images/category-page-02-image-card-06.jpg',
-    //       imageAlt:
-    //         'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
-    //     },
-    //   ],
-      sections: [
-        {
-          id: 'collectables',
-          name: 'Gifts & Collectables',
-          items: [
-            { name: 'Tailgate & Spirit', href: '/shop/gifts-collectables/tailgate-spirit' },
-            { name: 'Drinkwear', href: '/shop/gifts-collectables/drinkwear' },
-            { name: 'Sweaters', href: '/shop/gifts-collectables/sweaters' },
-            { name: 'Auto Accessories', href: '/shop/gifts-collectables/auto-accessories' },
-            { name: 'Blankets', href: '/shop/gifts-collectables/blankets' },
-            { name: 'School Accessories', href: '/shop/gifts-collectables/school-accessories' },
-            { name: 'Office & Travel', href: '/shop/gifts-collectables/office-travel' },
-            { name: 'Pet Supplies', href: '/shop/gifts-collectables/pet-supplies' },
-            { name: 'Plush', href: '/shop/gifts-collectables/plush' },
-            { name: 'Ornaments & Holiday', href: '/shop/gifts-collectables/ornaments-holiday' },
-            { name: 'Golf', href: '/shop/gifts-collectables/golf' },
-            { name: 'Home Decor', href: '/shop/gifts-collectables/home-decor' },
-            { name: 'Browse All', href: '/shop/gifts-collectables' },
+            { name: 'Drawing Supplies', href: '/shop/art-materials/drawing-supplies' },
+            { name: 'Art, Paper Boards & Film Products', href: '/shop/art-materials/art-paper-boards-film-products' },
+            { name: 'Pastels & Painting Supplies', href: '/shop/art-materials/pastels-painting-supplies' },
+            { name: 'Other Art School Supplies', href: '/shop/art-materials/art-school-supplies' },  
+            { name: 'Browse All', href: '/shop/art-materials' },
           ],
         },
       ],

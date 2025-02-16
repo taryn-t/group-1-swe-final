@@ -29,10 +29,9 @@ const subCategories = [
 
 
   { name: 'Textbooks', href: '#' },
-  { name: "Men's Clothing", href: '#' },
-  { name: "Women's Clothing", href: '#' },
-  { name: "Kid's Clothing", href: '#' },
-  { name: 'Gifts & Collectables', href: '#' },
+  { name: "School Supplies", href: '#' },
+  { name: "Engineering Supplies", href: '#' },
+  { name: "Art Materials", href: '#' },
 ]
 const filters = [
   {
