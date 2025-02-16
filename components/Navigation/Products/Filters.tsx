@@ -51,7 +51,8 @@ function classNames(...classes:Array<string>) {
   return classes.filter(Boolean).join(' ')
 }
 type Props = {
-  children: ReactNode
+  children: ReactNode,
+
 }
 
 export default function Filters({children}:Props) {
