@@ -63,7 +63,7 @@ export default function Hero(){
               <div className="mt-4 sm:mt-6">
                 <a
                   href="#"
-                  className="inline-block rounded-md border border-transparent bg-marshall px-8 py-3 font-medium text-white hover:bg-marshall"
+                  className="inline-block rounded-md border border-transparent bg-marshall-600 px-8 py-3 font-medium text-white hover:bg-marshall-500"
                 >
                   Shop Collection
                 </a>

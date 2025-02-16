@@ -11,7 +11,19 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        marshall: '#00b140;'
+        marshall : {
+          '50': '#eefff3',
+          '100': '#d7ffe5',
+          '200': '#b2ffcc',
+          '300': '#76ffa6',
+          '400': '#33f579',
+          '500': '#09de55',
+          '600': '#00b140',
+          '700': '#049138',
+          '800': '#0a7130',
+          '900': '#0a5d2a',
+          '950': '#003415',
+      },
         
       },
     },

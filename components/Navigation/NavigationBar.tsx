@@ -94,9 +94,40 @@ export const navigation = {
         },
       ],
     },
+    {
+      id: 'textbooks',
+      name: 'Textbooks',
+    //   featured: [
+    //     {
+    //       name: 'New Arrivals',
+    //       href: '#',
+    //       imageSrc: 'https://tailwindui.com/plus-assets/img/ecommerce-images/mega-menu-category-01.jpg',
+    //       imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
+    //     },
+    //     {
+    //       name: 'Basic Tees',
+    //       href: '#',
+    //       imageSrc: 'https://tailwindui.com/plus-assets/img/ecommerce-images/mega-menu-category-02.jpg',
+    //       imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
+    //     },
+    //   ],
+      sections: [
+        {
+          id: 'textbook-section',
+          name: 'Textbooks',
+          items: [
+            { name: 'Find Your Textbook', href: '/shop/textbooks' },
+            { name: 'Sell Your Textbooks', href: '/shop/textbooks/sell-your-textbooks' },
+            { name: 'Textbook FAQs', href: '/shop/textbooks/faqs' },
+            { name: 'In-store price Match Guarantee', href: '/shop/textbooks/price-match' },
+            { name: 'Register for Text Rental', href: '/shop/textbooks/register-rental' },
+          ],
+        },
+      ],
+    },
   ],
   pages: [
-    { name: 'Textbooks', href: '/shop/textbooks' },
+    // { name: 'Textbooks', href: '/shop/textbooks' },
   ],
 }
 
@@ -158,7 +189,7 @@ export default function NavigationBar() {
               </button>
             </div>
 
-            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+            {/* <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {navigation.pages.map((page) => (
                 <div key={page.name} className="flow-root">
                   <Link href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
@@ -166,7 +197,7 @@ export default function NavigationBar() {
                   </Link>
                 </div>
               ))}
-            </div>
+            </div> */}
 
             {/* Links */}
             <TabGroup className="mt-2">
@@ -175,7 +206,7 @@ export default function NavigationBar() {
                   {navigation.categories.map((category) => (
                     <Tab
                       key={category.name}
-                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-base font-medium whitespace-nowrap text-gray-900 data-selected:border-marshall data-selected:text-marshall"
+                      className="flex-1 border-b-2 border-transparent px-1 py-4 text-base font-medium whitespace-nowrap text-gray-900 data-selected:border-marshall-600 data-selected:text-marshall-600"
                     >
                       {category.name}
                     </Tab>
@@ -259,7 +290,7 @@ export default function NavigationBar() {
       </Dialog>
 
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-marshall px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
+        <p className="flex h-10 items-center justify-center bg-marshall-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
           Get free in-store pickup
         </p>
 
@@ -307,7 +338,7 @@ export default function NavigationBar() {
                         duration: 0.4,
                       }}
                       className="relative flex">
-                        <PopoverButton className="focus-visible:border-none focus-visible:ring-0 ring-0 border-none  focus-visible:outline-none  relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-open:border-marshall data-open:text-marshall">
+                        <PopoverButton className="focus-visible:border-none focus-visible:ring-0 ring-0 border-none  focus-visible:outline-none  relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-open:border-marshall-600 data-open:text-marshall-600">
                           {category.name}
                         </PopoverButton>
                       </motion.div>
@@ -369,20 +400,7 @@ export default function NavigationBar() {
                     </Popover>
                   ))}
 
-                  {navigation.pages.map((page) => (
-                    <motion.a
-                    variants={childVariants} /** Added variants **/
-                    transition={{
-                      ease: [0.1, 0.25, 0.3, 1],
-                      duration: 0.4,
-                    }}
-                      key={page.name}
-                      href={page.href}
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                    >
-                      {page.name}
-                    </motion.a>
-                  ))}
+              
                 </div>
               </PopoverGroup>
 
