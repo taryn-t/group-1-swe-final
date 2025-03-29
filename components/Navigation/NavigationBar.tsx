@@ -20,6 +20,7 @@ import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outli
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const parentVariants = {
     visible: { opacity: 1, y: 0 },
@@ -127,12 +128,12 @@ export const navigation = {
     },
   ],
   pages: [
-    // { name: 'Textbooks', href: '/shop/textbooks' },
+    { name: 'Contact', href: '/contact' },
   ],
 }
 
 export default function NavigationBar() {
-
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [hidden, setHidden] = useState(false);
   const [prev, setPrev] = useState(0);
@@ -154,7 +155,9 @@ export default function NavigationBar() {
     });
 
 
+  if(!pathname.includes('admin')) {
 
+  
   return (
     <motion.div
     variants={parentVariants}
@@ -189,7 +192,7 @@ export default function NavigationBar() {
               </button>
             </div>
 
-            {/* <div className="space-y-6 border-t border-gray-200 px-4 py-6">
+            <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               {navigation.pages.map((page) => (
                 <div key={page.name} className="flow-root">
                   <Link href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
@@ -197,7 +200,7 @@ export default function NavigationBar() {
                   </Link>
                 </div>
               ))}
-            </div> */}
+            </div>
 
             {/* Links */}
             <TabGroup className="mt-2">
@@ -400,17 +403,28 @@ export default function NavigationBar() {
                     </Popover>
                   ))}
 
-              
+                  {navigation.pages.map((page) => (
+                    <Link
+                      key={page.name}
+                      href={page.href}
+                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                    >
+                      {page.name}
+                    </Link>
+                  ))}  
                 </div>
-              </PopoverGroup>
 
+                
+              </PopoverGroup>
+                 
               <div className="ml-auto flex items-center">
+                
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  <Link href="/sign-in" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     Sign in
-                  </a>
+                  </Link>
                   <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                  <Link href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  <Link href="/create-account" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     Create account
                   </Link>
                 </div>
@@ -438,4 +452,5 @@ export default function NavigationBar() {
       </header>
     </motion.div>
   )
+}
 }
