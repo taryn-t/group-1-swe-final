@@ -29,7 +29,7 @@ export default function RootLayout({
 
   
   return (
-    <html lang="en" className=" w-full h-full overflow-hidden">
+    <html lang="en" className=" w-full h-full overflow-x-hidden">
       <body
         className={`${geistSans.variable} ${geistMono.variable} w-full h-full  antialiased`}
       >
