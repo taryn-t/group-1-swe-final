@@ -19,8 +19,8 @@ import {
   DocumentDuplicateIcon,
   FolderIcon,
   HomeIcon,
-  UsersIcon,
   XMarkIcon,
+  BookOpenIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import Logo from '@/components/Navigation/Logo';
@@ -29,9 +29,9 @@ const navigation = [
 
 
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
+  { name: 'TextBooks', href: '/admin/products/textbooks', icon: BookOpenIcon, current: false },
+  { name: 'Supplies', href: '/admin/products/textbooks', icon: FolderIcon, current: false },
+  { name: 'All Products', href: '/admin/products', icon: CalendarIcon, current: false },
   { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
   { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
 ]
@@ -259,7 +259,7 @@ export default function AdminLayout({
             </div>
           </div>
 
-          <main className="py-10 ">
+          <main className="py-6 ">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               {children}
             </div>
