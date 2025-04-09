@@ -1,7 +1,6 @@
 'use client'
 
 
-import CRUDHeader from "@/components/ADmin/CRUDHeader";
 import EditProduct from "@/components/ADmin/EditProduct";
 import StackedList from "@/components/ADmin/StackedList";
 import { useParams } from "next/navigation";
