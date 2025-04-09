@@ -1,4 +1,6 @@
+'use client'
 import Image from "next/image"
+import { usePathname } from "next/navigation";
 const footerNavigation = {
 
 
@@ -26,6 +28,10 @@ const footerNavigation = {
   
 
 export default function Footer(){
+    const pathname = usePathname();
+    
+
+    if(!pathname.includes('admin')){
 
     return(
         <>
@@ -117,4 +123,5 @@ export default function Footer(){
       </footer>
         </>
     )
+  }
 }
