@@ -1,27 +1,6 @@
+import Link from "next/link"
 
 
-const collections = [
-
-
-    {
-      name: "Textbooks",
-      href: '/shop/textbooks',
-      imageSrc: 'https://bloximages.newyork1.vip.townnews.com/herald-dispatch.com/content/tncms/assets/v3/editorial/8/69/8695552a-4029-5733-b854-e65db282bce9/605cf8c9a8db7.image.jpg?resize=1200%2C800',
-      imageAlt: 'Image of university bookstore shelves',
-    },
-    {
-      name: "School Supplies",
-      href: '/shop/school-supplies',
-      imageSrc: 'https://bkstr.scene7.com/is/image/Bkstr/9781423238614?$BookCategory_ET$',
-      imageAlt: 'Man wearing a comfortable and casual cotton t-shirt.',
-    },
-    {
-      name: "Engineering Supplies",
-      href: '/shop/engineering-supplies',
-      imageSrc: 'https://bkstr.scene7.com/is/image/Bkstr/8616184?$GMCategory_ET$',
-      imageAlt: 'Person sitting at a wooden desk with paper note organizer, pencil and tablet.',
-    },
-  ]
 
 export default function Hero(){
 
@@ -59,14 +38,16 @@ export default function Hero(){
               <div className="h-48 w-full bg-white" />
             </div>
             <div className="relative py-32">
-              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">Mid-Season Sale</h1>
+              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+                Marshall Univeristy Bookstore
+              </h1>
               <div className="mt-4 sm:mt-6">
-                <a
-                  href="#"
+                <Link
+                  href="/textbooks"
                   className="inline-block rounded-md border border-transparent bg-marshall-600 px-8 py-3 font-medium text-white hover:bg-marshall-500"
                 >
-                  Shop Collection
-                </a>
+                  Shop Textbooks
+                </Link>
               </div>
             </div>
           </div>
@@ -75,34 +56,43 @@ export default function Hero(){
             <h2 id="collection-heading" className="sr-only">
               Collections
             </h2>
-            <div className="h-96 mx-auto grid max-w-md grid-cols-1 gap-y-6 px-4 sm:max-w-7xl sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 sm:px-6 lg:gap-x-8 lg:px-8">
-              {collections.map((collection) => (
-                <div
-                  key={collection.name}
-                  className="group relative h-96 rounded-lg bg-white shadow-xl sm:aspect-4/5 sm:h-auto"
+            <div className="h-96 mx-auto grid max-w-md grid-cols-1 gap-y-6 px-4 sm:max-w-7xl  sm:gap-x-6 sm:gap-y-0 sm:px-6 lg:gap-x-8 lg:px-8">
+            <div className="relative isolate overflow-hidden bg-marshall-950 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32 grid grid-flow-row place-items-center ">
+            <h2 className="mx-auto max-w-3xl text-center text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              Find Your Textbook
+            </h2>
+            <p className="mx-auto mt-6 max-w-lg text-center text-lg text-gray-300">
+              Enter your courses to find the required texts
+            </p>
+            
+              <Link
+                href="/find-textbooks"
+                className="flex-none mt-6 rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Enter Courses
+              </Link>
+          
+            <svg
+              viewBox="0 0 1024 1024"
+              aria-hidden="true"
+              className="absolute top-1/2 left-1/2 -z-10 size-[64rem] -translate-x-1/2"
+            >
+              <circle r={512} cx={512} cy={512} fill="url(#759c1415-0410-454c-8f7c-9a820de03641)" fillOpacity="0.7" />
+              <defs>
+                <radialGradient
+                  r={1}
+                  cx={0}
+                  cy={0}
+                  id="759c1415-0410-454c-8f7c-9a820de03641"
+                  gradientUnits="userSpaceOnUse"
+                  gradientTransform="translate(512 512) rotate(90) scale(512)"
                 >
-                  <div aria-hidden="true" className="absolute inset-0 overflow-hidden rounded-lg">
-                  <div className="absolute inset-0 bg-black opacity-40 h-96 z-20" />
-                    <div className="absolute inset-0 overflow-hidden group-hover:opacity-75 ">
-                      <img alt={collection.imageAlt} src={collection.imageSrc} className="size-full object-cover" />
-                    </div>
-                    
-                  </div>
-                  <div className="absolute inset-0 flex items-end rounded-lg p-6 z-30">
-                    <div>
-                      <p aria-hidden="true" className="text-sm text-white">
-                        Shop the collection
-                      </p>
-                      <h3 className="mt-1 font-semibold text-white">
-                        <a href={collection.href}>
-                          <span className="absolute inset-0" />
-                          {collection.name}
-                        </a>
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                  <stop stopColor="#33f579" />
+                  <stop offset={1} stopColor="#049138" stopOpacity={0} />
+                </radialGradient>
+              </defs>
+            </svg>
+          </div>
             </div>
           </section>
         </div>

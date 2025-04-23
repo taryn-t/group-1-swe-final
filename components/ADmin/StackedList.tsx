@@ -79,6 +79,7 @@ function classNames(...classes: string[] ) {
 
 type Props = {
     header: string
+   
   }
 export default function StackedList({header}:Props) {
   return (

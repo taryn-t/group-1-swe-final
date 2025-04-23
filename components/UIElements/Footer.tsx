@@ -1,36 +1,43 @@
 'use client'
+import { useSession } from "next-auth/react";
 import Image from "next/image"
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 const footerNavigation = {
 
 
     products: [
-        { name: 'Find Your Textbook', href: '/shop/textbooks' },
-        { name: 'Sell Your Textbooks', href: '/shop/textbooks/sell-your-textbooks' },
-        { name: 'Textbook FAQs', href: '/shop/textbooks/faqs' },
-        { name: 'In-store price Match Guarantee', href: '/shop/textbooks/price-match' },
-        { name: 'Register for Text Rental', href: '/shop/textbooks/register-rental' },
+      { name: 'Shop All Textbooks', href: '/textbooks' },
+      { name: 'Find Your Textbook', href: '/find-textbooks' },
+      
     ],
     company: [
       { name: 'Terms & Conditions', href: '#' },
       { name: 'Privacy', href: '#' },
     ],
     customerService: [
-      { name: 'Contact', href: '#' },
-      { name: 'Shipping', href: '#' },
-      { name: 'Returns', href: '#' },
-      { name: 'Warranty', href: '#' },
-      { name: 'Secure Payments', href: '#' },
-      { name: 'FAQ', href: '#' },
-      { name: 'Find a store', href: '#' },
+      { name: 'Contact', href: '/contact' },
     ],
   }
   
 
 export default function Footer(){
     const pathname = usePathname();
+      const [signedIn, setSignedIn] = useState(false)
+      const { data: session, status } = useSession();
     
 
+       useEffect(()=>{
+    
+          if (session?.signedIn && !signedIn ) {
+             setSignedIn(true)
+          }
+    
+        },[session])
+
+
+
+    
     if(!pathname.includes('admin')){
 
     return(

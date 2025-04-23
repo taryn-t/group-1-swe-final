@@ -1,9 +1,10 @@
+import { TextbookDocument } from "@/models/Textbook"
 
 const trendingProducts = [
 
 
     {
-      id: 1,
+      _id: 1,
       name: 'Leather Long Wallet',
       color: 'Natural',
       price: '$75',
@@ -14,10 +15,10 @@ const trendingProducts = [
     // More products...
   ]
 type Props = {
-  title: string
+  textbooks: Array<TextbookDocument>;
 }
 
-export default function TrendingProducts({title}:Props){
+export default function TrendingProducts({textbooks}:Props){
 
     return(
         <>
@@ -25,7 +26,7 @@ export default function TrendingProducts({title}:Props){
           <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:pt-32">
             <div className="md:flex md:items-center md:justify-between">
               <h2 id="favorites-heading" className="text-2xl font-bold tracking-tight text-gray-900">
-                {title}
+                
               </h2>
               <a href="#" className="hidden text-sm font-medium text-marshall-600 hover:text-marshall-500 md:block">
                 Shop the collection
@@ -35,12 +36,12 @@ export default function TrendingProducts({title}:Props){
 
             <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
               {trendingProducts.map((product) => (
-                <div key={product.id} className="group relative">
+                <div key={product._id} className="group relative">
                   <div className="h-56 w-full overflow-hidden rounded-md group-hover:opacity-75 lg:h-72 xl:h-80">
-                    <img alt={product.imageAlt} src={product.imageSrc} className="size-full object-cover" />
+                    <img alt="" src={`/book/book.jpg`} className="size-full object-cover" />
                   </div>
                   <h3 className="mt-4 text-sm text-gray-700">
-                    <a href={product.href}>
+                    <a href={`/textbooks/${product._id}`}>
                       <span className="absolute inset-0" />
                       {product.name}
                     </a>

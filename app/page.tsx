@@ -1,5 +1,4 @@
 import Hero from "@/components/UIElements/Hero";
-import TrendingProducts from "@/components/Navigation/Products/TrendingProducts";
 import FindTextbooksSection from "@/components/UIElements/FindTextbooksSection";
 
 export default function Home() {
@@ -8,7 +7,7 @@ export default function Home() {
       <main className="">
         <Hero/>
         <FindTextbooksSection/>
-        <TrendingProducts title="School Supplies"/>
+        {/* <TrendingProducts title="School Supplies"/> */}
        
       </main>
     </div>
