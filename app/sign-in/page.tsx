@@ -1,4 +1,52 @@
+"use client";
+import { FormEvent, useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import TwoFactorModal from "@/components/ADmin/twofa";
+
+
 export default function SignIn() {
+
+  const [error, setError] = useState("");
+  const [signedIn, setSignedIn] = useState(false)
+  const [email, setEmail] = useState<any>()
+
+  const router = useRouter();
+
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+
+
+    const res = await signIn("credentials", {
+
+      email: formData.get("email"),
+
+      password: formData.get("password"),
+
+      redirect: false,
+
+    });
+
+    if (res?.error) {
+
+      setError(res.error as string);
+
+    }
+
+    if (res?.ok) {
+      let em = formData.get("email")
+      console.log(em)
+      setEmail(em)
+      setSignedIn(true)
+
+    }
+
+};
+
     return (
       <>
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -9,7 +57,8 @@ export default function SignIn() {
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form action="#" method="POST" className="space-y-6">
+            <form  className="space-y-6" onSubmit={handleSubmit}>
+            {error && <div className="text-red-700">{error}</div>}
               <div>
                 <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                   Email address
@@ -58,7 +107,7 @@ export default function SignIn() {
                 </button>
               </div>
             </form>
-  
+            
             <p className="mt-4 text-center text-sm/6 text-gray-500">
               <a href="/create-account" className="font-semibold text-marshall-600 hover:text-marshall-500">
                 Create an account
@@ -66,6 +115,10 @@ export default function SignIn() {
             </p>
           </div>
         </div>
+
+        {
+          signedIn ? <TwoFactorModal email={email} /> : <></>
+        }
       </>
     )
   }

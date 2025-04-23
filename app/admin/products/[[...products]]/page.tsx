@@ -1,7 +1,6 @@
 'use client'
 
 
-import CRUDHeader from "@/components/ADmin/CRUDHeader";
 import EditProduct from "@/components/ADmin/EditProduct";
 import StackedList from "@/components/ADmin/StackedList";
 import { useParams } from "next/navigation";
@@ -14,7 +13,7 @@ export default function Page() {
   console.log(params.products);
   return (
     <div className="grid grid-flow-row items-start justify-items-center min-h-screen  gap-16 sm:p-6 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8  sm:items-start w-full"> 
+      <div className="flex flex-col gap-8  sm:items-start w-full"> 
         {
           
           params.products[0] !== 'edit'  
@@ -27,7 +26,7 @@ export default function Page() {
           
         }
         
-      </main>
+      </div>
     </div>
   );
 }

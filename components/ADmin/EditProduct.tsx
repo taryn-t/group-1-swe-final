@@ -1,4 +1,4 @@
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { PhotoIcon } from '@heroicons/react/24/solid'
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 
 
@@ -12,9 +12,9 @@ export default function EditProduct({slug}:Props) {
     <div className="divide-y divide-gray-900/10">
       <div className="grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3">
         <div className="px-4 sm:px-0">
-          <h2 className="text-base/7 font-semibold text-gray-900">Add New Product</h2>
+          <h2 className="text-base/7 font-semibold text-gray-900">Edit Product</h2>
           <p className="mt-1 text-sm/6 text-gray-600">
-            Add information to create a new product in the database
+            Edit existing product
           </p>
         </div>
 

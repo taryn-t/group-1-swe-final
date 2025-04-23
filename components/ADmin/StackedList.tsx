@@ -3,17 +3,16 @@
 
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
-import { PropsWithChildren } from 'react'
 import CRUDHeader from './CRUDHeader'
 import Link from 'next/link'
 
-const statuses = {
+// const statuses = {
 
 
-  Complete: 'text-green-700 bg-green-50 ring-green-600/20',
-  'In progress': 'text-gray-600 bg-gray-50 ring-gray-500/10',
-  Archived: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
-}
+//   Complete: 'text-green-700 bg-green-50 ring-green-600/20',
+//   'In progress': 'text-gray-600 bg-gray-50 ring-gray-500/10',
+//   Archived: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
+// }
 const projects = [
 
   {
@@ -80,6 +79,7 @@ function classNames(...classes: string[] ) {
 
 type Props = {
     header: string
+   
   }
 export default function StackedList({header}:Props) {
   return (

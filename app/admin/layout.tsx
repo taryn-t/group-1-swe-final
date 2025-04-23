@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react'
+import {  useEffect, useState } from 'react'
 import {
   Dialog,
   DialogBackdrop,
@@ -24,13 +24,16 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import Logo from '@/components/Navigation/Logo';
+import { signOut, useSession } from 'next-auth/react';
+import { usePathname, useRouter } from 'next/navigation';
+import Loading from '@/components/Loading';
 
 const navigation = [
 
 
   { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
   { name: 'TextBooks', href: '/admin/products/textbooks', icon: BookOpenIcon, current: false },
-  { name: 'Supplies', href: '/admin/products/textbooks', icon: FolderIcon, current: false },
+  { name: 'Users', href: '/admin/users', icon: FolderIcon, current: false },
   { name: 'All Products', href: '/admin/products', icon: CalendarIcon, current: false },
   { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
   { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
@@ -53,11 +56,34 @@ export default function AdminLayout({
   children: React.ReactNode;
 }>) {
 
-
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [query, setQuery] = useState('');
+  
+  useEffect(() => {
+    if (status === "loading") return;
+    
+    if (!session || session.user.role !== "admin") {
+      router.replace("/");
+    }
+  }, [session, status]);
+
+  if (status === "loading") return <Loading/>;
+
+  const signOutBtn = () =>{
+    signOut({ callbackUrl: '/' });
+  }
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // prevent page reload
+    if (!query.trim()) return;
+    router.push(`/admin/textbooks/search?q=${encodeURIComponent(query.trim())}`);
+  };
 
   return (
-    <div className="h-full">
+    <div className="h-full ">
       <div>
         <Dialog open={sidebarOpen} onClose={setSidebarOpen} className="relative z-50 lg:hidden">
           <DialogBackdrop
@@ -200,12 +226,13 @@ export default function AdminLayout({
               <div aria-hidden="true" className="h-6 w-px bg-gray-200 lg:hidden" />
 
               <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-                <form action="#" method="GET" className="grid flex-1 grid-cols-1">
+                <form  className="grid flex-1 grid-cols-1" onSubmit={handleSearch}>
                   <input
                     name="search"
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
+                    onChange={(e) => setQuery(e.target.value)}
                     className="col-start-1 row-start-1 block size-full bg-white pl-8 text-base text-gray-900 outline-hidden placeholder:text-gray-400 sm:text-sm/6"
                   />
                   <MagnifyingGlassIcon
@@ -226,14 +253,9 @@ export default function AdminLayout({
                   <Menu as="div" className="relative">
                     <MenuButton className="-m-1.5 flex items-center p-1.5">
                       <span className="sr-only">Open user menu</span>
-                      <img
-                        alt=""
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        className="size-8 rounded-full bg-gray-50"
-                      />
                       <span className="hidden lg:flex lg:items-center">
                         <span aria-hidden="true" className="ml-4 text-sm/6 font-semibold text-gray-900">
-                          Tom Cook
+                          {session?.user.name}
                         </span>
                         <ChevronDownIcon aria-hidden="true" className="ml-2 size-5 text-gray-400" />
                       </span>
@@ -244,12 +266,12 @@ export default function AdminLayout({
                     >
                       {userNavigation.map((item) => (
                         <MenuItem key={item.name}>
-                          <a
-                            href={item.href}
+                          <button
+                            onClick={signOutBtn}
                             className="block px-3 py-1 text-sm/6 text-gray-900 data-focus:bg-gray-50 data-focus:outline-hidden"
                           >
                             {item.name}
-                          </a>
+                          </button>
                         </MenuItem>
                       ))}
                     </MenuItems>
@@ -259,7 +281,7 @@ export default function AdminLayout({
             </div>
           </div>
 
-          <main className="py-6 ">
+          <main className="py-6 max-h-full">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               {children}
             </div>

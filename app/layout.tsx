@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavigationBar from "../components/Navigation/NavigationBar";
 import Footer from "@/components/UIElements/Footer";
-
+import { Provider } from  "./provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,13 +30,16 @@ export default function RootLayout({
   
   return (
     <html lang="en" className=" w-full h-full overflow-x-hidden">
-      <body
+      <Provider>
+        <body
         className={`${geistSans.variable} ${geistMono.variable} w-full h-full  antialiased`}
-      >
-        <NavigationBar/> 
-        {children}
-        <Footer/>
-      </body>
+        >
+          <NavigationBar/> 
+          {children}
+          <Footer/>
+        </body>
+      </Provider>
+      
     </html>
   );
 }
