@@ -1,5 +1,6 @@
 "use client"
 import Loading from "@/components/Loading";
+import Filters from "@/components/Navigation/Products/Filters";
 import ProductGrid from "@/components/Navigation/Products/ProductGrid";
 import Single from "@/components/Single";
 import { PaginatedTextbookResponse } from "@/models/Textbook";
@@ -17,7 +18,10 @@ export default function Page() {
   const { data: session, status } = useSession();
   const query = searchParams.get('q');
   const [isSearch, setIsSearch] = useState(false)
-  const [first, second,third] = params.textbooks;
+  const [first, setFirst] = useState<string | undefined>()
+  const [second, setSecond] = useState<string | undefined>()
+  const [third, setThird] = useState<string | undefined>()
+
   // All hooks should be declared unconditionally above here
 
   useEffect(() => {
@@ -35,6 +39,9 @@ export default function Page() {
 
   async function getData() {
     console.log(params);
+    setFirst(params.textbooks[0])
+    setSecond(params.textbooks[1])
+    setThird(params.textbooks[2])
 
     if (!params.textbooks?.length) {
       const res = await fetch(`/api/textbooks`, { cache: "no-store" });
@@ -42,7 +49,7 @@ export default function Page() {
       if (data.success) setResults(data);
     } else {
       
-      const isDepartment = first.length === 3;
+      const isDepartment = first?.length === 3;
       const s = first === "search" && !second &&!third
       
       setIsSearch(s)
@@ -53,7 +60,7 @@ export default function Page() {
         if (data.success) setResults(data);
       }
       else if(isSingleView){
-        const res = await fetch(`/api/textbooks/search?q=${encodeURIComponent(first.trim())}`, { cache: "no-store" });
+        const res = await fetch(`/api/textbooks/search?q=${first}`, { cache: "no-store" });
         const data = await res.json();
         console.log("single")
         console.log(data)
@@ -88,17 +95,18 @@ export default function Page() {
       <main className="flex flex-col gap-8 pt-12 sm:items-center w-full">
         {results === undefined ? <Loading />
          : <>
-           <div className="sm:flex sm:items-baseline sm:justify-between w-full max-w-3xl lg:max-w-7xl ">
-              <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-                {`${isSearch ?  results.results.length+' found for "'+ query + '"' 
+           
+            <Filters header={
+              `${isSearch ?  results.results.length+' found for "'+ query + '"' 
                   : third ?  results.results.length+' found for '+ second + ' section ' + third 
                   : second && !third ? results.results.length+' found for'+ second 
                   : first && !second ? results.results.length+' found for department '+ first 
                   : "All Textbooks"
-                 }`}
-              </h2>
-            </div>
-          <ProductGrid products={results} />
+                 }`
+            }>
+              <ProductGrid products={results} />
+            </Filters>
+          
          </>
    }
       </main>
