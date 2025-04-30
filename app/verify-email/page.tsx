@@ -1,6 +1,6 @@
 
 'use client'
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function VerifyEmail() {
@@ -37,16 +37,18 @@ export default function VerifyEmail() {
 
   if(token){
       return (
-        <div className="w-full h-full min-h-screen min-w-screen grid place-items-center">
+          <div className="w-full h-full min-h-screen min-w-screen grid place-items-center">
         <h1 className="text-center w-fit">{message}</h1>
         </div>
+        
     );
   }
   else{
     return(
-        <div className="w-full h-full min-h-screen min-w-screen grid place-items-center">
+<div className="w-full h-full min-h-screen min-w-screen grid place-items-center">
             <h1 className="text-center">Check your email for a verification link</h1>
         </div>
+        
     )
   }
 

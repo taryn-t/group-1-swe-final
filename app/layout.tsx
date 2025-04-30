@@ -6,6 +6,7 @@ import NavigationBar from "../components/Navigation/NavigationBar";
 import Footer from "@/components/UIElements/Footer";
 import { Provider } from  "./provider";
 import { CartProvider } from "./context/CartContext";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,7 +39,10 @@ export default function RootLayout({
             >
               <NavigationBar/> 
               <div className="min-h-screen">
-                {children}
+                <Suspense>
+                  {children}
+                </Suspense>
+                
               </div>
               
               <Footer/>

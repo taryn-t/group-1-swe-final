@@ -1,6 +1,6 @@
 'use client'
 
-import {  ReactNode, useEffect, useState } from 'react'
+import {  ReactNode, Suspense, useEffect, useState } from 'react'
 import {
   Dialog,
   DialogBackdrop,
@@ -72,7 +72,7 @@ export default function MerchFilters({children, header, deptSelect}:Props) {
 
 
   return (
-    <div className="bg-white">
+ <div className="bg-white">
       <div>
         {/* Mobile filter dialog */}
         <Dialog open={mobileFiltersOpen} onClose={setMobileFiltersOpen} className="relative z-40 lg:hidden">
@@ -308,5 +308,6 @@ export default function MerchFilters({children, header, deptSelect}:Props) {
         </main>
       </div>
     </div>
+   
   )
 }

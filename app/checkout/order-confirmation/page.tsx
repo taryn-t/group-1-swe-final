@@ -5,7 +5,7 @@ import { OrderDocument } from "@/models/Order";
 import { TextbookDocument } from "@/models/Textbook";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-
+import { Suspense } from 'react'
 
 export default function Page() {
     

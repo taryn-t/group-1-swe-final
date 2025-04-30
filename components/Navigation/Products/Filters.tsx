@@ -17,7 +17,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { DepartmentDocument } from '@/models/Department'
 import { useRouter, useSearchParams } from 'next/navigation'
-
+import { Suspense } from 'react'
 const sortOptions = [
 
 
@@ -110,7 +110,7 @@ export default function Filters({children, header, deptSelect}:Props) {
       }
 
   return (
-    <div className="bg-white">
+ <div className="bg-white">
       <div>
         {/* Mobile filter dialog */}
         <Dialog open={mobileFiltersOpen} onClose={setMobileFiltersOpen} className="relative z-40 lg:hidden">
@@ -346,5 +346,6 @@ export default function Filters({children, header, deptSelect}:Props) {
         </main>
       </div>
     </div>
+   
   )
 }
