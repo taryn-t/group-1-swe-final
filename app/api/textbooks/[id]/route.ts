@@ -2,10 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
 import Textbook from "@/models/Textbook";
 import mongoose from "mongoose";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
 
 
+export const runtime = 'edge';
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ id: string }> }

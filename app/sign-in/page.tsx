@@ -1,6 +1,6 @@
 "use client";
 import { FormEvent, useState } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import TwoFactorModal from "@/components/ADmin/twofa";
 
@@ -10,6 +10,7 @@ export default function SignIn() {
   const [error, setError] = useState("");
   const [signedIn, setSignedIn] = useState(false)
   const [email, setEmail] = useState<any>()
+  // const { update } = useSession();
 
   const router = useRouter();
 
@@ -38,8 +39,8 @@ export default function SignIn() {
     }
 
     if (res?.ok) {
+      // await update();
       let em = formData.get("email")
-      console.log(em)
       setEmail(em)
       setSignedIn(true)
 

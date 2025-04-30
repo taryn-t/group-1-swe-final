@@ -1,107 +1,131 @@
-"use client"
+"use client";
+
+import { useTextbookSearch } from "@/hooks/useTextbookSearch";
 import Loading from "@/components/Loading";
+import Filters from "@/components/Navigation/Products/Filters";
 import ProductGrid from "@/components/Navigation/Products/ProductGrid";
 import Single from "@/components/Single";
-import { PaginatedTextbookResponse } from "@/models/Textbook";
 import { useSession } from "next-auth/react";
-import { useParams, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import { ArrowLongLeftIcon, ArrowLongRightIcon } from "@heroicons/react/20/solid";
+import Link from "next/link";
+import { TextbookDocument } from "@/models/Textbook";
+import { useEffect } from "react";
 
 export default function Page() {
-  const params = useParams<{ textbooks: string[] }>();
-      const searchParams = useSearchParams()
-  
-  const [results, setResults] = useState<PaginatedTextbookResponse>();
-  const [page, setPage] = useState(1);
-  const [single, setSingle] = useState();
-  const { data: session, status } = useSession();
-  const query = searchParams.get('q');
-  const [isSearch, setIsSearch] = useState(false)
-  const [first, second,third] = params.textbooks;
-  // All hooks should be declared unconditionally above here
+  const { data: session,status } = useSession();
+  const { results, single, isSingleView, buildHeaderText, page } = useTextbookSearch();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  useEffect(() => {
-    if (status === "loading") return;
-    console.log("Session:", session);
-  }, [session, status]);
+  if (isSingleView && single) {
+    return <Single textbook product={single} user={session?.user} />;
+  }
 
-  useEffect(() => {
-    if (!results) {
-      getData();
-    }
-  }, []);
-  const isSingleView = params.textbooks?.length === 1 && params.textbooks[0].length > 3 && params.textbooks[0] != 'search'  ;
-
-
-  async function getData() {
-    console.log(params);
-
-    if (!params.textbooks?.length) {
-      const res = await fetch(`/api/textbooks`, { cache: "no-store" });
-      const data = await res.json();
-      if (data.success) setResults(data);
-    } else {
-      
-      const isDepartment = first.length === 3;
-      const s = first === "search" && !second &&!third
-      
-      setIsSearch(s)
-      if (isDepartment && !second) {
-        const res = await fetch(`/api/textbooks/search?department=${first}`, { cache: "no-store" });
-        const data = await res.json();
-        console.log(data)
-        if (data.success) setResults(data);
-      }
-      else if(isSingleView){
-        const res = await fetch(`/api/textbooks/search?q=${encodeURIComponent(first.trim())}`, { cache: "no-store" });
-        const data = await res.json();
-        console.log("single")
-        console.log(data)
-        if (data.success) setSingle(data.results[0]);
-      }
-      else if ( second) {
-        const res = await fetch(`/api/textbooks/search?department=${first}&course=${second}`, { cache: "no-store" });
-        const data = await res.json();
-        if (data.success) setResults(data);
-      } else if (isSearch) {
-        const res = await fetch(`/api/textbooks/search?q=${query}`, { cache: "no-store" });
-        const data = await res.json();
-      
-        if (data.success) setResults(data);
-      }
-
-      else if(third){
-        const res = await fetch(`/api/textbooks/search?department=${first}&course=${second}&section=${third}`, { cache: "no-store" });
-        const data = await res.json();
-        console.log(data)
-        if (data.success) setResults(data);
-        console.log(results)
-      }
-    }
+  if (!results) {
+    return <Loading />;
   }
 
 
-  return isSingleView  && single !== undefined? (
-    <Single product={single} user={session?.user} />
-  ) : (
-    <div className="grid grid-flow-row items-start justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 pt-12 sm:items-center w-full">
-        {results === undefined ? <Loading />
-         : <>
-           <div className="sm:flex sm:items-baseline sm:justify-between w-full max-w-3xl lg:max-w-7xl ">
-              <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-                {`${isSearch ?  results.results.length+' found for "'+ query + '"' 
-                  : third ?  results.results.length+' found for '+ second + ' section ' + third 
-                  : second && !third ? results.results.length+' found for'+ second 
-                  : first && !second ? results.results.length+' found for department '+ first 
-                  : "All Textbooks"
-                 }`}
-              </h2>
+    
+  function generatePageNumbers(currentPage: number, totalPages: number) {
+    const pages = [];
+  
+    if (totalPages <= 5) {
+      // if 5 or less pages, show all
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        pages.push(1, 2, 3, 4, "...", totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1, "...", totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
+      }
+    }
+  
+    return pages;
+  }
+
+  const pages = generatePageNumbers(page, Number(results?.totalPages));
+
+  return (
+    <div className="grid grid-flow-row items-start justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] max-w-screen">
+      <div className="flex flex-col gap-8 pt-12 sm:items-center max-w-7xl ">
+        <Filters header={buildHeaderText()} deptSelect="">
+          <div className="bg-white max-w-screen">
+          
+          <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8 ">
+            <h2 className="sr-only">Products</h2>
+    
+            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+              {results.results.map((product:TextbookDocument) =>  (
+                <Link key={product._id} href={`/textbooks/${product._id}`} className="group">
+                  <img
+                    alt={product.name}
+                    src={"/book/book.jpg"}
+                    className="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8"
+                  />
+                  <h3 className="mt-4 text-sm text-gray-700">{product.name}</h3>
+                  <p className="mt-1 text-lg font-medium text-gray-900">${product.price}</p>
+                </Link>
+              ))}
             </div>
-          <ProductGrid products={results} />
-         </>
-   }
-      </main>
+          </div>
+        </div>
+        </Filters>
+
+        {/* Pagination */}
+        <nav className="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0 w-full">
+          <div className="-mt-px flex w-0 flex-1">
+            <button
+              onClick={() => {
+                const p = page - 1;
+                router.push(`${pathname}?page=${p}`);
+              }}
+              className="inline-flex items-center border-t-2 border-transparent pt-4 pr-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+            >
+              <ArrowLongLeftIcon aria-hidden="true" className="mr-3 size-5 text-gray-400" />
+              Previous
+            </button>
+          </div>
+          <div className="hidden md:-mt-px md:flex">
+          {pages.map((p, index) => (
+            typeof p === "string" ? (
+              <span key={index} className="inline-flex items-center px-4 pt-4 text-sm font-medium text-gray-400">
+                {p}
+              </span>
+            ) : (
+              <Link
+                key={index}
+                href={`${pathname}?page=${p}`}
+                className={
+                  p === page
+                    ? "inline-flex items-center border-t-2 border-marshall-500 px-4 pt-4 text-sm font-medium text-marshall-600"
+                    : "inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                }
+              >
+                {p}
+              </Link>
+            )
+          ))}
+          </div>
+          <div className="-mt-px flex w-0 flex-1 justify-end">
+            <button
+              onClick={() => {
+                const p = page + 1;
+                router.push(`${pathname}?page=${p}`);
+              }}
+              className="inline-flex items-center border-t-2 border-transparent pt-4 pl-1 text-sm font-medium text-gray-500 hover:text-gray-300 hover:text-gray-700"
+            >
+              Next
+              <ArrowLongRightIcon aria-hidden="true" className="ml-3 size-5 text-gray-400" />
+            </button>
+          </div>
+        </nav>
+      </div>
     </div>
   );
-}
+}export const runtime = 'edge';

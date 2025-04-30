@@ -17,6 +17,8 @@ export interface TextbookDocument extends mongoose.Document {
     author: string;
     publisher: string;
     section_id: string;
+    instock: boolean;
+    stock: number
 }
 
 const TextbookSchema = new Schema<TextbookDocument>({
@@ -27,6 +29,8 @@ const TextbookSchema = new Schema<TextbookDocument>({
   author: { type: String, required: true },
   publisher: { type: String, required: true },
   section_id: { type: String, required: true },
+  instock: { type: Boolean, required: true },
+  stock:  { type: Number, required: true },
 });
 
 const Textbook = mongoose.models.Textbook || model<TextbookDocument>("Textbook", TextbookSchema);

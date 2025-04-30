@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 
 
-
+export const runtime = 'edge';
 export default function Page() {
 
   const [textbook, setTextbook] = useState<TextbookDocument>()

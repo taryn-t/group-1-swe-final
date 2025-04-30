@@ -4,7 +4,7 @@ import User from "@/models/User";
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-
+export const runtime = 'edge';
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -37,11 +37,11 @@ export async function PATCH(
     }
 
     const body = await req.json();
-    const { name, email, role } = body;
+    const { name, email, role, address, phone } = body;
 
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { name, email, role },
+      { name, email, role, address, phone },
       { new: true, runValidators: true }
     ).select("-password");
 

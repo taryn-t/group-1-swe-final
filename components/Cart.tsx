@@ -6,6 +6,8 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useSession } from 'next-auth/react'
 import { TextbookDocument } from '@/models/Textbook'
 import Link from 'next/link'
+import { MerchandiseDocument } from '@/models/Merchandise'
+import { CartItem, useCart } from '@/app/context/CartContext'
 
 
 interface Props{
@@ -16,40 +18,38 @@ interface Props{
 }
 export default function Cart({open, setOpen, amount, setAmount}:Props) {
   const { data: session, status } = useSession();
-  const [products, setProducts] = useState<Array<TextbookDocument  >>()
-  const [total, setTotal] = useState(0)
+  const [textbooks, setTextbooks] = useState<Array<TextbookDocument  >>()
+  const [merchandise, setMerchandise] = useState<Array<MerchandiseDocument  >>()
+  const [email, setEmail] = useState("")
+  const { cart, fetchCart, total, removeItem, setUser} = useCart();
+  
 
 
   useEffect(()=>{
-    if(products === undefined && session){
+    if(session && !cart){
         getCartItems()
-    }else if(products !== undefined){
-      getTotal()
     }
-  },[session, products])
+  },[cart])
 
   async function getCartItems(){
-
-    const res = await fetch(`/api/cart?user_id=${session?.user.email}`);
-    const data = await res.json();
-    console.log(data)
-    if (data.success) {
-        const cartBooks = data.cart.textbooks;
-        setProducts(cartBooks)
-        setAmount(cartBooks.length)
-    }
-  }
-
-  function getTotal(){
-    let t = 0;
+    const em = session?.user?.email ?? "";
+    setEmail(em)
+    setUser(em)
+    fetchCart(em)
     
-    for(const product of (products ?? [])){
-      
-      t = product.price + t
-    }
-    setTotal(t);
-  }
+    
+   
+  } 
 
+
+  function remove(id: string){
+    const em = session?.user?.email ?? "";
+
+    if(em !== ""){
+      setUser(em)
+      removeItem(id)
+    }
+  }
   
 
   return (
@@ -86,7 +86,7 @@ export default function Cart({open, setOpen, amount, setAmount}:Props) {
                   <div className="mt-8">
                     <div className="flow-root">
                       <ul role="list" className="-my-6 divide-y divide-gray-200">
-                        {products?.map((product,i) => (
+                        {cart?.map((product,i) => (
                           <li key={product._id +i} className="flex py-6">
                             <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
                               <img alt={product.name} src={"/book/book.jpg"} className="size-full object-cover" />
@@ -96,17 +96,21 @@ export default function Cart({open, setOpen, amount, setAmount}:Props) {
                               <div>
                                 <div className="flex justify-between text-base font-medium text-gray-900">
                                   <h3>
-                                    <Link href={`/textbooks/${product.id}`}>{product.name}</Link>
+                                    <Link href={`/textbooks/${product._id}`}>{product.name}</Link>
                                   </h3>
                                   <p className="ml-4">${product.price}</p>
                                 </div>
-                                <p className="mt-1 text-sm text-gray-500">ISBN: {product.isbn}</p>
+                                {
+                                  product?.isbn !== null ?
+                                  <p className="mt-1 text-sm text-gray-500">ISBN: {product.isbn}</p> : <></>
+                                }
+                                
                               </div>
                               <div className="flex flex-1 items-end justify-between text-sm">
                                 {/* <p className="text-gray-500">Qty {product.quantity}</p> */}
 
                                 <div className="flex">
-                                  <button type="button" className="font-medium text-marshall-600 hover:text-marshall-500">
+                                  <button type="button" onClick={()=>remove(product?._id)} className="font-medium text-marshall-600 hover:text-marshall-500">
                                     Remove
                                   </button>
                                 </div>
@@ -127,7 +131,7 @@ export default function Cart({open, setOpen, amount, setAmount}:Props) {
                   <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                   <div className="mt-6">
                     <a
-                      href="#"
+                      href="/checkout"
                       className="flex items-center justify-center rounded-md border border-transparent bg-marshall-600 px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-marshall-700"
                     >
                       Checkout

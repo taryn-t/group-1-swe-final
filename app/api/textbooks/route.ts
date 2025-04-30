@@ -30,3 +30,50 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ message: 'Error fetching textbooks', error }, { status: 500 });
   }
 }
+
+export async function POST(req: NextRequest) {
+  await connectDB();
+
+  try {
+    const body = await req.json();
+
+    const {
+      isbn,
+      name,
+      edition,
+      price,
+      author,
+      publisher,
+      section_id,
+      instock,
+      stock,
+    } = body;
+
+    // Basic validation
+    if (!isbn || !name || !edition || !price || !author || !publisher || !section_id || instock === undefined || stock === undefined) {
+      return NextResponse.json({ success: false, error: "All fields are required" }, { status: 400 });
+    }
+
+    // Create and save textbook
+    const newTextbook = new Textbook({
+      isbn,
+      name,
+      edition,
+      price,
+      author,
+      publisher,
+      section_id,
+      instock,
+      stock,
+    });
+
+    const savedTextbook = await newTextbook.save();
+
+    return NextResponse.json({ success: true, textbook: savedTextbook }, { status: 201 });
+
+  } catch (error) {
+    console.error("Error creating textbook:", error);
+    return NextResponse.json({ success: false, error: "Server error" }, { status: 500 });
+  }
+}
+export const runtime = 'edge';

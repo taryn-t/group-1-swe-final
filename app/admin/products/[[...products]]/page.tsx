@@ -5,7 +5,7 @@ import EditProduct from "@/components/ADmin/EditProduct";
 import StackedList from "@/components/ADmin/StackedList";
 import { useParams } from "next/navigation";
 
-
+export const runtime = 'edge';
 
 export default function Page() {
   const params = useParams<{products: Array<string>}>()

@@ -1,6 +1,6 @@
 'use client'
 
-import {  ReactNode, useState } from 'react'
+import {  ReactNode, useEffect, useState } from 'react'
 import {
   Dialog,
   DialogBackdrop,
@@ -15,13 +15,13 @@ import {
 } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-
+import { DepartmentDocument } from '@/models/Department'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 const sortOptions = [
 
 
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
+
   { name: 'Price: Low to High', href: '#', current: false },
   { name: 'Price: High to Low', href: '#', current: false },
 ]
@@ -52,14 +52,65 @@ function classNames(...classes:Array<string>) {
 }
 type Props = {
   children: ReactNode,
-
+  header: string,
+  deptSelect?: string
 }
 
-export default function Filters({children}:Props) {
+export default function Filters({children, header, deptSelect}:Props) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
+  const router = useRouter()
+  const sp = useSearchParams()
+  const selectedQ = sp.get('dept')
+   const [depts, setDepts] = useState<Array<DepartmentDocument>>()
+    const [selectedDept, setSelectedDept] = useState<string>()
+  
+      useEffect(()=>{  
+            if(depts === undefined){
+                getDepartments()
+  
+            }
+            else if(Object.getOwnPropertyNames(selectedDept).length === 0){
+
+
+
+              setSelectedDept(depts[0].name)
+            }
+          
+        }, [])
+        
+      
+       
+      async function getDepartments(){
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/departments`, {
+            cache: "no-store", // disables caching
+          });
+    
+        const data = await res.json();
+    
+        if (data.success) {    
+            setDepts(data.departments)
+            
+        }
+        
+        
+      }
+
+
+      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const input = e.target.value;
+
+
+        if(input.length > 0){
+          setSelectedDept(input)
+          router.push(`/textbooks/search?dept=${encodeURIComponent(input)}`);
+        }else{
+          router.push(`/textbooks`);
+        }
+      }
+
   return (
-    <div className="bg-white">
+ <div className="bg-white">
       <div>
         {/* Mobile filter dialog */}
         <Dialog open={mobileFiltersOpen} onClose={setMobileFiltersOpen} className="relative z-40 lg:hidden">
@@ -87,7 +138,7 @@ export default function Filters({children}:Props) {
 
               {/* Filters */}
               <form className="mt-4 border-t border-gray-200">
-                <h3 className="sr-only">Categories</h3>
+                {/* <h3 className="sr-only">Categories</h3>
                 <ul role="list" className="px-2 py-3 font-medium text-gray-900">
                   {subCategories.map((category) => (
                     <li key={category.name}>
@@ -96,13 +147,13 @@ export default function Filters({children}:Props) {
                       </a>
                     </li>
                   ))}
-                </ul>
+                </ul> */}
 
-                {filters.map((section) => (
-                  <Disclosure key={section.id} as="div" className="border-t border-gray-200 px-4 py-6">
+                
+                  <Disclosure  as="div" className="border-t border-gray-200 px-4 py-6">
                     <h3 className="-mx-2 -my-3 flow-root">
                       <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                        <span className="font-medium text-gray-900">{section.name}</span>
+                        <span className="font-medium text-gray-900">Department</span>
                         <span className="ml-6 flex items-center">
                           <PlusIcon aria-hidden="true" className="size-5 group-data-open:hidden" />
                           <MinusIcon aria-hidden="true" className="size-5 group-not-data-open:hidden" />
@@ -111,15 +162,16 @@ export default function Filters({children}:Props) {
                     </h3>
                     <DisclosurePanel className="pt-6">
                       <div className="space-y-6">
-                        {section.options.map((option, optionIdx) => (
-                          <div key={option.value} className="flex gap-3">
+                        {depts?.map((option, optionIdx) => (
+                          <div key={option.id} className="flex gap-3">
                             <div className="flex h-5 shrink-0 items-center">
                               <div className="group grid size-4 grid-cols-1">
                                 <input
-                                  defaultValue={option.value}
-                                  id={`filter-mobile-${section.id}-${optionIdx}`}
-                                  name={`${section.id}[]`}
+                                  name={option.name}
                                   type="checkbox"
+                                  value={option.name}
+                                  checked={option.name === selectedQ}
+                                  onChange={handleChange}
                                   className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-marshall-600 checked:bg-marshall-600 indeterminate:border-marshall-600 indeterminate:bg-marshall-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marshall-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
                                 />
                                 <svg
@@ -145,17 +197,16 @@ export default function Filters({children}:Props) {
                               </div>
                             </div>
                             <label
-                              htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
                               className="min-w-0 flex-1 text-gray-500"
                             >
-                              {option.label}
+                              {option.name}
                             </label>
                           </div>
                         ))}
                       </div>
                     </DisclosurePanel>
                   </Disclosure>
-                ))}
+              
               </form>
             </DialogPanel>
           </div>
@@ -163,7 +214,7 @@ export default function Filters({children}:Props) {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">Best Sellers</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900">{header}</h1>
 
             <div className="flex items-center">
               <Menu as="div" className="relative inline-block text-left">
@@ -222,20 +273,19 @@ export default function Filters({children}:Props) {
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
               <form className="hidden lg:block">
-                <h3 className="sr-only">Categories</h3>
+                {/* <h3 className="sr-only">Categories</h3>
                 <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
                   {subCategories.map((category) => (
                     <li key={category.name}>
                       <a href={category.href}>{category.name}</a>
                     </li>
                   ))}
-                </ul>
+                </ul> */}
 
-                {filters.map((section) => (
-                  <Disclosure key={section.id} as="div" className="border-b border-gray-200 py-6">
+                  <Disclosure  as="div" className="border-b border-gray-200 py-6">
                     <h3 className="-my-3 flow-root">
                       <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                        <span className="font-medium text-gray-900">{section.name}</span>
+                        <span className="font-medium text-gray-900">Department</span>
                         <span className="ml-6 flex items-center">
                           <PlusIcon aria-hidden="true" className="size-5 group-data-open:hidden" />
                           <MinusIcon aria-hidden="true" className="size-5 group-not-data-open:hidden" />
@@ -243,17 +293,18 @@ export default function Filters({children}:Props) {
                       </DisclosureButton>
                     </h3>
                     <DisclosurePanel className="pt-6">
-                      <div className="space-y-4">
-                        {section.options.map((option, optionIdx) => (
-                          <div key={option.value} className="flex gap-3">
+                      <div className=" grid grid-cols-3 grid-flow-row gap-y-2">
+                        {depts?.map((option:any, optionIdx) => (
+                          <div key={option.id} className="flex gap-3 h-[20px]">
                             <div className="flex h-5 shrink-0 items-center">
                               <div className="group grid size-4 grid-cols-1">
                                 <input
-                                  defaultValue={option.value}
-                                  defaultChecked={option.checked}
-                                  id={`filter-${section.id}-${optionIdx}`}
-                                  name={`${section.id}[]`}
+                                  name={option.name}
                                   type="checkbox"
+                                  value={option.name}
+                                  checked={option.name === selectedQ}
+
+                                  onChange={handleChange}
                                   className="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-marshall-600 checked:bg-marshall-600 indeterminate:border-marshall-600 indeterminate:bg-marshall-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marshall-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
                                 />
                                 <svg
@@ -278,15 +329,14 @@ export default function Filters({children}:Props) {
                                 </svg>
                               </div>
                             </div>
-                            <label htmlFor={`filter-${section.id}-${optionIdx}`} className="text-sm text-gray-600">
-                              {option.label}
+                            <label  className="text-sm text-gray-600 h-[20px]">
+                              {option.name}
                             </label>
                           </div>
                         ))}
                       </div>
                     </DisclosurePanel>
                   </Disclosure>
-                ))}
               </form>
 
               {/* Product grid */}
@@ -296,5 +346,6 @@ export default function Filters({children}:Props) {
         </main>
       </div>
     </div>
+   
   )
 }

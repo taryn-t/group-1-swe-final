@@ -13,7 +13,7 @@ export default function Alert({type,onClose, onAgree}:Props){
 
     if(type==="UploadSuccess"){
         return (
-            <div className={"absolute rounded-md bg-green-50 p-4 top-20"}>
+            <div className={" rounded-md bg-green-50 p-4 "}>
                 <div className="flex">
                     <div className="shrink-0">
                         <CheckCircleIcon aria-hidden="true" className="size-5 text-green-400" />
@@ -42,7 +42,7 @@ export default function Alert({type,onClose, onAgree}:Props){
 
     if(type == "UploadFailure"){
         return (
-           <div className="rounded-md bg-red-50 p-4">
+          <div className={" rounded-md bg-green-50 p-4 "}>
            <div className="flex">
                <div className="shrink-0">
                <XCircleIcon aria-hidden="true" className="size-5 text-red-400" />

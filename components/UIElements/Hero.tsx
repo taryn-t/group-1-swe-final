@@ -1,25 +1,39 @@
+"use client"
+
+import { useSession } from "next-auth/react";
 import Link from "next/link"
+import { useEffect, useState } from "react";
 
 
 
 export default function Hero(){
+  const { data: session, status } = useSession();
+  const [role, setRole] = useState("")
+    useEffect(()=>{
+      console.log(session)
+      if (session?.signedIn) {
+         setRole(session?.user?.role)
+      }else{
+        setRole("user")
+      }
 
+    },[session])
     return(
         <>
-        <div className="relative">
+        <div className="relative min-h-96 ">
           {/* Background image and overlap */}
-          <div aria-hidden="true" className="absolute inset-0 hidden sm:flex sm:flex-col">
-            <div className="relative w-full flex-1 bg-gray-800">
-              <div className="absolute inset-0 overflow-hidden">
+          <div aria-hidden="true" className="absolute inset-0 hidden sm:flex sm:flex-col h-full ">
+            <div className="relative w-full flex-1 bg-gray-800 h-96 ">
+              <div className="absolute inset-0 overflow-hidden h-96 ">
                 <img
                   alt=""
                   src="https://photos.smugmug.com/2019/Campus-Photos/Block-MOld-Main-May-2019-Rick-Haye/i-RK2Z4Dr/0/88b86cdd/XL/0274-XL.jpg"
-                  className="size-full object-cover"
+                  className="size-full object-cover h-96 "
                 />
               </div>
-              <div className="absolute inset-0 bg-gray-900 opacity-50" />
+              <div className="absolute inset-0 bg-gray-900 opacity-50 h-96 " />
             </div>
-            <div className="h-32 w-full bg-white md:h-40 lg:h-48" />
+            <div className=" w-full bg-white md:h-40  h-96 " />
           </div>
 
           <div className="relative mx-auto max-w-3xl px-4 pb-96 text-center sm:px-6 sm:pb-0 lg:px-8">
@@ -39,23 +53,28 @@ export default function Hero(){
             </div>
             <div className="relative py-32">
               <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-                Marshall Univeristy Bookstore
+                Get the Latest Marshall Merch
               </h1>
               <div className="mt-4 sm:mt-6">
                 <Link
-                  href="/textbooks"
+                  href="/merch"
                   className="inline-block rounded-md border border-transparent bg-marshall-600 px-8 py-3 font-medium text-white hover:bg-marshall-500"
                 >
-                  Shop Textbooks
+                  Shop Now
                 </Link>
               </div>
             </div>
           </div>
 
-          <section aria-labelledby="collection-heading" className="relative -mt-96 sm:mt-0 h-96">
-            <h2 id="collection-heading" className="sr-only">
-              Collections
-            </h2>
+         
+        
+        </div>
+
+        {
+           session?.user?.role !== "user" && session?.user?.role  !== "Marshall Fan"
+            ?
+            <section aria-labelledby="collection-heading" className="relative  sm:mt-0 h-96 mb-16">
+            
             <div className="h-96 mx-auto grid max-w-md grid-cols-1 gap-y-6 px-4 sm:max-w-7xl  sm:gap-x-6 sm:gap-y-0 sm:px-6 lg:gap-x-8 lg:px-8">
             <div className="relative isolate overflow-hidden bg-marshall-950 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32 grid grid-flow-row place-items-center ">
             <h2 className="mx-auto max-w-3xl text-center text-4xl font-semibold tracking-tight text-white sm:text-5xl">
@@ -94,8 +113,8 @@ export default function Hero(){
             </svg>
           </div>
             </div>
-          </section>
-        </div>
+          </section> : <></>
+          }
         </>
     )
 }
