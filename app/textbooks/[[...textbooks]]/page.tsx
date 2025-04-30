@@ -128,4 +128,4 @@ export default function Page() {
       </div>
     </div>
   );
-}export const runtime = 'edge';
+}

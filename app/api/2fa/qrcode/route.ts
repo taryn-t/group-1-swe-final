@@ -19,4 +19,3 @@ export async function GET(): Promise<Response> {
     status: 200,
   });
 }
-export const runtime = 'edge';

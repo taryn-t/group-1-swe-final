@@ -251,4 +251,3 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ message: 'Order deleted' });
   }
 }
-export const runtime = 'edge';

@@ -82,4 +82,3 @@ async function handleSubmit(event: FormEvent<HTMLFormElement>) {
   )
  
 }
-export const runtime = 'edge';

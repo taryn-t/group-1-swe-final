@@ -4,7 +4,6 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth'; 
 import User from '@/models/User'; 
 import { decrypt, encrypt } from '@/utils/encryption';
-export const runtime = 'edge';
 interface Verify2FABody {
   token: string;
   email?: string; // ⬅️ Needed for login path

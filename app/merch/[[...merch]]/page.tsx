@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { ArrowLongLeftIcon, ArrowLongRightIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
-export const runtime = 'edge';
+
 export default function Page() {
   const { data: session } = useSession();
   const { results, single, isSingleView, buildHeaderText, page, totalPages } = useMerchandiseSearch();
