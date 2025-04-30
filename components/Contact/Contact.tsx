@@ -64,7 +64,7 @@ async function handleSubmit(event: FormEvent<HTMLFormElement>) {
               Get in touch
             </h2>
             <p className="mt-6 text-lg/8 text-gray-600">
-              We'd love to hear your feedback
+              We&apos;d love to hear your feedback
             </p>
             <dl className="mt-10 space-y-4 text-base/7 text-gray-600">
               <div className="flex gap-x-4">
