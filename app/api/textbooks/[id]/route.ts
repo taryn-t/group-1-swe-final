@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongoose";
 import Textbook from "@/models/Textbook";
 import mongoose from "mongoose";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+
 
 
 export async function GET(

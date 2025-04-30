@@ -27,7 +27,7 @@ function TwoFactorModal({email}:Props){
   const [secret, setSecret] = useState('');
   const [tries, setTries] = useState(0)
   const router = useRouter()
-      const { update } = useSession();
+      // const { update } = useSession();
 
 
 
@@ -71,15 +71,13 @@ function TwoFactorModal({email}:Props){
       console.log(result)
       if (result.verified) {
         setInvalidOtp(false);
-        await update({ verified: true });
+        // await update({ verified: true });
         router.push('/')
       } 
       else if(tries <5)
         {
         setTries(tries+1)
         setInvalidOtp(true);
-      }else{
-        signOut();
       }
     }
   };

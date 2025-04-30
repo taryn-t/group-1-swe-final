@@ -1,6 +1,36 @@
+import { sendMessage } from '@/lib/mailer';
 import { BuildingOffice2Icon, EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline'
+import { FormEvent } from 'react';
 
 export default function Example() {
+
+
+async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+
+  event.preventDefault();
+ 
+  const formData = new FormData(event.currentTarget);
+
+
+  const name = `${formData.get("first-name")} ${formData.get("last-name")}`
+  const email = `${formData.get("email")}`
+  const phone = `${formData.get("phone")}`
+  const message = `${formData.get("message")}`
+
+    const res = await fetch('/api/send-message',{
+      method: "POST",
+      body: JSON.stringify( {
+        email: email,
+        name: name,
+        phone: phone, 
+        message: message
+
+      })
+    })
+
+    const data = res.json()
+    console.log(data)
+}
   return (
     <div className="relative isolate bg-white">
       <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
@@ -34,8 +64,7 @@ export default function Example() {
               Get in touch
             </h2>
             <p className="mt-6 text-lg/8 text-gray-600">
-              Proin volutpat consequat porttitor cras nullam gravida at. Orci molestie a eu arcu. Sed ut tincidunt
-              integer elementum id sem. Arcu sed malesuada et magna.
+              We'd love to hear your feedback
             </p>
             <dl className="mt-10 space-y-4 text-base/7 text-gray-600">
               <div className="flex gap-x-4">
@@ -44,9 +73,9 @@ export default function Example() {
                   <BuildingOffice2Icon aria-hidden="true" className="h-7 w-6 text-gray-400" />
                 </dt>
                 <dd>
-                  545 Mavis Island
+                  1 John Marshall Drive
                   <br />
-                  Chicago, IL 99191
+                  Huntington, WV 25709
                 </dd>
               </div>
               <div className="flex gap-x-4">
@@ -56,7 +85,7 @@ export default function Example() {
                 </dt>
                 <dd>
                   <a href="tel:+1 (555) 234-5678" className="hover:text-gray-900">
-                    +1 (555) 234-5678
+                    +1 (681) 234-5678
                   </a>
                 </dd>
               </div>
@@ -67,14 +96,14 @@ export default function Example() {
                 </dt>
                 <dd>
                   <a href="mailto:hello@example.com" className="hover:text-gray-900">
-                    hello@example.com
+                    hello@marshallbookstore.com
                   </a>
                 </dd>
               </div>
             </dl>
           </div>
         </div>
-        <form action="#" className="px-6 pt-20 pb-24 sm:pb-32 lg:px-8 lg:py-48">
+        <form onSubmit={handleSubmit} className="px-6 pt-20 pb-24 sm:pb-32 lg:px-8 lg:py-48">
           <div className="mx-auto max-w-xl lg:mr-0 lg:max-w-lg">
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
               <div>
@@ -125,8 +154,8 @@ export default function Example() {
                 </label>
                 <div className="mt-2.5">
                   <input
-                    id="phone-number"
-                    name="phone-number"
+                    id="phone"
+                    name="phone"
                     type="tel"
                     autoComplete="tel"
                     className="block w-full rounded-md border border-gray-400 bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-marshall-600"

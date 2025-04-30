@@ -3,6 +3,7 @@ import { connectDB } from '@/lib/mongoose';
 import Textbook from '@/models/Textbook';
 import Course from '@/models/Course';
 import Section from '@/models/Section';
+import Department from '@/models/Department';
 
 export async function GET(req: NextRequest) {
   await connectDB();
@@ -51,33 +52,51 @@ export async function GET(req: NextRequest) {
         { section_id: { $regex: q, $options: 'i' } },
       ];
     
-      // Try matching _id directly
+      // If q looks like an ObjectId
       if (/^[0-9a-fA-F]{24}$/.test(q)) {
         orQuery.push({ _id: q });
       }
     
-      // If `section_id` is already set from param, add the $or to $and
+      // 🔥 Walk Department -> Course -> Section -> Textbook
+      const matchedDepartments = await Department.find({ name: { $regex: q, $options: 'i' } });
+    
+      const departmentIds = matchedDepartments.map(dep => dep.subject_id);
+    
+      if (departmentIds.length > 0) {
+        const matchedCourses = await Course.find({ subject_id: { $in: departmentIds } });
+        const courseIds = matchedCourses.map(course => course.id);
+    
+        if (courseIds.length > 0) {
+          const matchedSections = await Section.find({ course_id: { $in: courseIds } });
+          const sectionIds = matchedSections.map(section => section.id);
+    
+          if (sectionIds.length > 0) {
+            orQuery.push({ section_id: { $in: sectionIds } });
+          }
+        }
+      }
+    
       if (Object.keys(searchQuery).length > 0) {
         searchQuery.$and = [searchQuery, { $or: orQuery }];
-        delete searchQuery.section_id; // moved into $and
+        delete searchQuery.section_id;
       } else {
         searchQuery.$or = orQuery;
       }
     }
 
-       // Apply section ID filters if set from course/department
-      if (sectionFilterIds.length > 0) {
-        if (searchQuery.$and) {
-          searchQuery.$and.push({ section_id: { $in: sectionFilterIds } });
-        } else if (searchQuery.$or) {
-          searchQuery.$and = [{ $or: searchQuery.$or }, { section_id: { $in: sectionFilterIds } }];
-          delete searchQuery.$or;
-        } else {
-          searchQuery.section_id = { $in: sectionFilterIds };
-        }
+    // STEP 3: Apply section filters from department/course selection
+    if (sectionFilterIds.length > 0) {
+      if (searchQuery.$and) {
+        searchQuery.$and.push({ section_id: { $in: sectionFilterIds } });
+      } else if (searchQuery.$or) {
+        searchQuery.$and = [{ $or: searchQuery.$or }, { section_id: { $in: sectionFilterIds } }];
+        delete searchQuery.$or;
+      } else {
+        searchQuery.section_id = { $in: sectionFilterIds };
       }
+    }
 
-    // STEP 3: Query with pagination
+    // STEP 4: Execute paginated query
     const [results, total] = await Promise.all([
       Textbook.find(searchQuery).skip(skip).limit(limit),
       Textbook.countDocuments(searchQuery),
@@ -87,13 +106,15 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      results: results,
+      results,
       page,
       perPage: limit,
       totalPages,
-      totalItems:total
+      totalItems: total
     });
+
   } catch (error) {
+    console.error("Search Error:", error);
     return NextResponse.json({ message: 'Search/filter error', error }, { status: 500 });
   }
 }

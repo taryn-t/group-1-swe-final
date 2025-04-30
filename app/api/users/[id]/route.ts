@@ -37,11 +37,11 @@ export async function PATCH(
     }
 
     const body = await req.json();
-    const { name, email, role } = body;
+    const { name, email, role, address, phone } = body;
 
     const updatedUser = await User.findByIdAndUpdate(
       id,
-      { name, email, role },
+      { name, email, role, address, phone },
       { new: true, runValidators: true }
     ).select("-password");
 

@@ -5,7 +5,10 @@ export interface UserDocument extends Document {
   email: string;
   password: string;
   role: string;
+  address?: string
   twoFactorSecret?: string;
+  phone?:string
+  emailToken?: string
 }
 
 const UserSchema = new Schema<UserDocument>({
@@ -29,10 +32,15 @@ const UserSchema = new Schema<UserDocument>({
   role: {
     type: String,
     required: true,
-    default: "user" // ✅ Optional, but useful
+    default: "user" 
   },
   twoFactorSecret: { type: String, default: null },
-});
+  address: { type: String, default: null },
+  phone: { type: String, default: null },
+  emailToken: {
+    type: String,
+  },
+},{timestamps:true});
 
 const User = mongoose.models.User || model<UserDocument>('User', UserSchema);
 export default User;

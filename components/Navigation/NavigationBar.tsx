@@ -6,16 +6,21 @@ import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
   PopoverGroup,
 
 } from '@headlessui/react'
-import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, ChevronDownIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import SearchBar from "./SearchBar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Cart from "../Cart";
+import { useCart } from "@/app/context/CartContext";
 
 const parentVariants = {
     visible: { opacity: 1, y: 0 },
@@ -119,7 +124,8 @@ export const navigation = {
     // },
   ],
   pages: [
-    { name: 'Shop Textbooks', href: '/textbooks' },
+    { name: 'Textbooks', href: '/textbooks' },
+    { name: 'Marshall Merch', href: '/merch' },
     { name: 'Find Your Textbook', href: '/find-textbooks' },
     { name: 'Contact', href: '/contact' },
   ],
@@ -135,7 +141,8 @@ export default function NavigationBar() {
   const [prev, setPrev] = useState(0);
   const [cartAmt, setCartAmt] = useState(0);
   const { scrollY } = useScroll();
-
+    const { cart, fetchCart  } = useCart();
+  
   function update(latest: number, prev: number): void {
       if (latest < prev) {
         setHidden(false);
@@ -154,7 +161,7 @@ export default function NavigationBar() {
 
 
     useEffect(()=>{
-
+      console.log(session)
       if (session?.signedIn && !signedIn ) {
          setSignedIn(true)
       }
@@ -164,7 +171,16 @@ export default function NavigationBar() {
     const clickSignOut = () =>{
       signOut();
     }
-    
+    console.log(cart)
+    const filteredPages = navigation.pages.filter(page => {
+      if(page.name === "Marshall Merch"){
+        return true
+      }
+      if (!session ||(session?.user?.role === "Marshall Fan" || session?.user?.role === "user") && (page.name === "Textbooks" || page.name === "Find Your Textbook")) {
+        return false; // hide Textbooks and Find Your Textbook for Marshall Fan/User
+      }
+      return true;
+    });
 
   if(!pathname.includes('admin')) {
 
@@ -204,13 +220,20 @@ export default function NavigationBar() {
             </div>
 
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-              {navigation.pages.map((page) => (
-                <div key={page.name} className="flow-root">
-                  <Link href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
-                    {page.name}
-                  </Link>
-                </div>
-              ))}
+
+                {filteredPages.map((page,i) => 
+                    
+                      <div                key={page.name+i}
+                      className="flow-root">
+                      <Link href={page.href} className="-m-2 block p-2 font-medium text-gray-900">
+                        {page.name}
+                      </Link>
+                    </div>
+                    
+                    
+                  )}  
+
+      
             </div>
 
             {/* Links */}
@@ -248,7 +271,7 @@ export default function NavigationBar() {
 
       <header className="relative bg-white">
         <p className="flex h-10 items-center justify-center bg-marshall-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-          Get free in-store pickup
+          Free shipping on orders $50+
         </p>
 
         <nav aria-label="Top" className="mx-auto w-full  ">
@@ -288,15 +311,18 @@ export default function NavigationBar() {
                 <div className="flex h-full space-x-8">
                  
 
-                  {navigation.pages.map((page) => (
-                    <Link
-                      key={page.name}
-                      href={page.href}
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                    >
-                      {page.name}
-                    </Link>
-                  ))}  
+                  {filteredPages.map((page) => 
+                    
+                      <Link
+                        key={page.name}
+                        href={page.href}
+                        className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                      >
+                        {page.name}
+                      </Link>
+                    
+                    
+                  )}  
                 </div>
 
                 
@@ -304,7 +330,7 @@ export default function NavigationBar() {
                  
               <div className="ml-auto flex items-center">
                 {
-                  !signedIn ? (
+                  !session ? (
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                     <Link href="/sign-in" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                       Sign in
@@ -337,10 +363,64 @@ export default function NavigationBar() {
                       aria-hidden="true"
                       className="size-6 shrink-0 text-gray-400 group-hover:text-gray-500"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cartAmt}</span>
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cart.length}</span>
                     <span className="sr-only">items in cart, view bag</span>
                   </button>
+
+                
+         
                 </div>
+                   {
+                    session ? 
+                    <Menu as="div" className="relative">
+                    <MenuButton className="-m-1.5 flex items-center p-1.5">
+                      <span className="sr-only">Open user menu</span>
+                      <span className="hidden lg:flex lg:items-center">
+                        <span aria-hidden="true" className="ml-4 text-sm/6 font-semibold text-gray-900">
+                          {session?.user.name}
+                        </span>
+                        <ChevronDownIcon aria-hidden="true" className="ml-2 size-5 text-gray-400" />
+                      </span>
+                    </MenuButton>
+                    <MenuItems
+                      transition
+                      className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 ring-1 shadow-lg ring-gray-900/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                    >
+                     <MenuItem >
+                          <Link
+                            href={`/profile/${session?.user._id}`}
+                            className="block px-3 py-1 text-sm/6 text-gray-900 hover:bg-gray-50 data-focus:outline-hidden border-b border-gray-100"
+                          >
+                            Profile
+                          </Link>
+                      </MenuItem>
+                      <MenuItem >
+                          <Link
+                            href={`/profile/${session?.user._id}/orders`}
+                            className="block px-3 py-1 text-sm/6 text-gray-900 hover:bg-gray-50 data-focus:outline-hidden border-b border-gray-100"
+                          >
+                            Orders
+                          </Link>
+                      </MenuItem>
+                      {
+                        session?.user.role === "Instructor" ?
+                        <MenuItem>
+                            <Link
+                            href={`/profile/${session?.user._id}/manage-courses`}
+                            className="block px-3 py-1 text-sm/6 text-gray-900 hover:bg-gray-50 data-focus:outline-hidden border-b border-gray-100"
+                            >
+                              Manage Courses
+                            </Link>
+                        </MenuItem>
+                        :<></>
+                      }
+                      
+
+                    </MenuItems>
+                  </Menu>
+                  : <></>
+                   }
+                
               </div>
             </div>
           </div>

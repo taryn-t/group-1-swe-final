@@ -18,32 +18,34 @@ export async function POST(req: NextRequest): Promise<Response> {
   let verified: boolean;
 
   // 1. Verifying during LOGIN (no session yet)
-  if (email) {
+  if (email ) {
     const user = await User.findOne({ email });
   
     if (!user) {
       return NextResponse.json({ verified: false, message: 'User not found' }, { status: 404 });
     }
-  
-    if (!user.twoFactorSecret) {
-      return NextResponse.json({ verified: false, message: '2FA not set up' }, { status: 400 });
+    if(user.twoFactorSecret){
+      let decryptedSecret: string;
+      try {
+        decryptedSecret = await decrypt(user.twoFactorSecret);
+      } catch (err) {
+        return NextResponse.json({ verified: false, message: 'Secret decryption failed' }, { status: 500 });
+      }
+    
+      verified = speakeasy.totp.verify({
+        secret: decryptedSecret,
+        encoding: 'base32',
+        token,
+        window: 1,
+      });
+    
+      return NextResponse.json({ verified });
     }
+    // if (!user.twoFactorSecret) {
+    //   return NextResponse.json({ verified: false, message: '2FA not set up' }, { status: 400 });
+    // }
   
-    let decryptedSecret: string;
-    try {
-      decryptedSecret = await decrypt(user.twoFactorSecret);
-    } catch (err) {
-      return NextResponse.json({ verified: false, message: 'Secret decryption failed' }, { status: 500 });
-    }
-  
-    verified = speakeasy.totp.verify({
-      secret: decryptedSecret,
-      encoding: 'base32',
-      token,
-      window: 1,
-    });
-  
-    return NextResponse.json({ verified });
+   
   }
 
   // 2. Enabling 2FA for the first time (user is logged in)

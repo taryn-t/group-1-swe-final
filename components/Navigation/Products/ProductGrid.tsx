@@ -5,7 +5,7 @@ import Link from "next/link"
 
 
   type Props = {
-    products: PaginatedTextbookResponse;
+    products: PaginatedTextbookResponse ;
   }
   export default function ProductGrid({products}:Props) {
     
@@ -13,7 +13,7 @@ import Link from "next/link"
       return (<Loading/>) 
     }
     return (
-        <div className="bg-white">
+        <div className="bg-white w-full">
          
           <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-10 lg:max-w-7xl lg:px-8">
             <h2 className="sr-only">Products</h2>

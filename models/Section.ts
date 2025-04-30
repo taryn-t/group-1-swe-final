@@ -5,6 +5,7 @@ export interface SectionDocument extends mongoose.Document {
   number: string;
   textbook_link: string;
   course_id: string;
+  user_id?: mongoose.Types.ObjectId[]
 }
 
 const SectionSchema = new Schema<SectionDocument>({
@@ -12,6 +13,7 @@ const SectionSchema = new Schema<SectionDocument>({
   number: { type: String, required: true },
   textbook_link: { type: String, required: true },
   course_id: { type: String, required: true },
+  user_id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], 
 });
 
 const Section = mongoose.models.Section || model<SectionDocument>("Section", SectionSchema);
