@@ -15,3 +15,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ success: false, error: "Could not fetch department" }, { status: 500 });
   }
 }
+export const runtime = 'edge';

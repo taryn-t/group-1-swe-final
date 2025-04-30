@@ -118,3 +118,5 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ message: 'Search/filter error', error }, { status: 500 });
   }
 }
+
+export const runtime = 'edge';

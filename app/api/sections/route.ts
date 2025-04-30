@@ -3,7 +3,7 @@ import { connectDB } from '@/lib/mongoose';
 import Section from '@/models/Section';
 import mongoose from 'mongoose';
 import Course from '@/models/Course';
-
+export const runtime = 'edge';
 export async function GET(req: NextRequest) {
   await connectDB();
   const { searchParams } = new URL(req.url);

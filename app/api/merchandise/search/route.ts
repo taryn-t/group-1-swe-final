@@ -3,7 +3,7 @@ import { connectDB } from '@/lib/mongoose';
 import Merchandise from '@/models/Merchandise';
 import { ObjectId } from 'mongodb';
 
-
+export const runtime = 'edge';
 
 export async function GET(req: NextRequest) {
   await connectDB();

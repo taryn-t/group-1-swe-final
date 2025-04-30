@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { connectDB } from "@/lib/mongoose";
 import User from "@/models/User";
-
+export const runtime = 'edge';
 export async function GET(req: NextRequest) {
   await connectDB();
 

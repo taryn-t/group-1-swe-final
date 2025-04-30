@@ -4,7 +4,7 @@ import User from "@/models/User";
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-
+export const runtime = 'edge';
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ id: string }> }

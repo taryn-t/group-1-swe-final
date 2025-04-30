@@ -4,7 +4,7 @@ import { connectDB } from '@/lib/mongoose';
 import Textbook from '@/models/Textbook';
 import Merchandise from '@/models/Merchandise';
 import mongoose, { ObjectId, Types } from 'mongoose';
-
+export const runtime = 'edge';
 export async function GET(req: NextRequest) {
   await connectDB();
 
