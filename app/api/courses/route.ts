@@ -16,4 +16,3 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ success: false, error: "Could not fetch courses" }, { status: 500 });
   }
 }
-export const runtime = 'edge';

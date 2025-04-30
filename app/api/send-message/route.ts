@@ -12,4 +12,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: false, error: "Email sending failed" }, { status: 500 });
   }
 }
-export const runtime = 'edge';

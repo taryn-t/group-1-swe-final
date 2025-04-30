@@ -15,4 +15,3 @@ export async function GET() {
     return NextResponse.json({ success: false, error: "Failed to fetch users" }, { status: 500 });
   }
 }
-export const runtime = 'edge';
